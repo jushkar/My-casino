@@ -1,0 +1,43 @@
+{
+  "baseline": "1546e39592cc43bbc5f6a341d73f278b19db2a61",
+  "scope": "Prompt 2 frontend only",
+  "checks": [
+    {
+      "command": "node closure/gameplay.cjs (CASINO_URL=http://127.0.0.1:4173)",
+      "exit": 0,
+      "evidence": "gameplay-production.log"
+    },
+    {
+      "command": "node closure/ui-audit.cjs",
+      "exit": 0,
+      "evidence": "ui-final.log"
+    },
+    {
+      "command": "node closure/responsive-fonts.cjs",
+      "exit": 0,
+      "evidence": "responsive-fonts.log"
+    },
+    {
+      "command": "node closure/network-probe.cjs (CASINO_URL=http://127.0.0.1:4173)",
+      "exit": 0,
+      "evidence": "network-final.log"
+    },
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund in empty directory",
+      "exit": 0,
+      "evidence": "clean-install.log"
+    },
+    {
+      "command": "npm run typecheck; npm run build in clean installed copy",
+      "exit": 0,
+      "evidence": "clean-final-checks.log"
+    },
+    {
+      "command": "npm run typecheck; npm run build in working checkout",
+      "exit": 0,
+      "evidence": "final-checks.log"
+    }
+  ],
+  "remainingNoncritical": "Optional Google Fonts request blocked by environment; confirmed Liberation Sans fallback",
+  "gate": "PASS"
+}

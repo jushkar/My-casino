@@ -1,0 +1,192 @@
+index.html:8:    <meta name="description" content="My Casino: virtual credits only, no monetary value, no deposits or withdrawals." />
+App.tsx:61:            Local session storage encountered an error. Reset the local virtual credit session to continue. VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS. Credits are nontransferable and nonredeemable.
+components/LiveFeed.tsx:29:  'Just cashed out Aviator at 18.5x for ₹45,000!',
+components/LiveFeed.tsx:31:  'Instant UPI withdrawal arrived in my HDFC account in 30 seconds.',
+pages/Transactions.tsx:2:export const Transactions: React.FC = () => <div className="p-6 space-y-4"><h1 className="text-2xl font-bold">Virtual credits</h1><p>VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS.</p><p>Credits are nontransferable and nonredeemable. No payment or transfer history is available.</p></div>;
+pages/TeenPatti.tsx:214:            <span>Main Hand Bet (₹)</span>
+pages/TeenPatti.tsx:215:            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+pages/TeenPatti.tsx:218:            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+pages/TeenPatti.tsx:247:            <span className="font-mono text-amber-400">₹{pairPlusBet.toLocaleString('en-IN')}</span>
+pages/TeenPatti.tsx:260:                {amt === 0 ? 'Off' : `+₹${amt}`}
+pages/TeenPatti.tsx:297:              : `Deal ${playStyle === 'BLIND' ? 'Blind' : 'Seen'} Hand (₹${totalWager.toLocaleString('en-IN')})`}
+pages/TeenPatti.tsx:341:                {outcome.pairPlusWon > 0 ? ` · Pair+ Bonus +₹${outcome.pairPlusWon}` : ''}
+pages/TeenPatti.tsx:345:                  ? `+₹${outcome.payout.toLocaleString('en-IN')}`
+pages/TeenPatti.tsx:346:                  : `-₹${totalWager.toLocaleString('en-IN')}`}
+pages/Slots.tsx:214:            <span>Total Spin Bet (₹)</span>
+pages/Slots.tsx:218:            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+pages/Slots.tsx:251:                ₹{amt >= 1000 ? `${amt / 1000}k` : amt}
+pages/Slots.tsx:292:              : `Spin Reels (₹${bet.toLocaleString('en-IN')})`}
+pages/Slots.tsx:358:              WON +₹{winInfo.payout.toLocaleString('en-IN')} ({winInfo.mult}× across {winInfo.linesWon} lines)
+components/Layout.tsx:76:      <p>VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS.</p>
+components/Layout.tsx:77:      <p>Credits are nontransferable and nonredeemable. This balance exists only in this browser.</p>
+components/Layout.tsx:384:      <div className="bg-[#131c31] text-center text-xs p-2">VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS. Credits are nontransferable and nonredeemable.</div>
+components/GameArtwork.tsx:571:              ₹
+services/engine.ts:353:          type: 'DEPOSIT',
+services/engine.ts:736:  public deposit(amount: number, method = 'UPI Instant (GPay / PhonePe)', utr?: string): string {
+services/engine.ts:740:    this.logTransaction('DEPOSIT', amount, method, refUtr);
+services/engine.ts:745:    return this.deposit(amount, 'Instant Wallet Top-Up');
+services/engine.ts:748:  public withdraw(amount: number, method = 'IMPS / UPI Instant Payout'): { ok: boolean; utr: string } {
+services/engine.ts:752:    this.logTransaction('WITHDRAW', amount, method, refUtr);
+services/engine.ts:756:  public transferToVault(amount: number): boolean {
+services/engine.ts:760:    this.logTransaction('VAULT_DEPOSIT', amount, 'Vault Deposit');
+services/engine.ts:764:  public withdrawFromVault(amount: number): boolean {
+services/engine.ts:768:    this.logTransaction('VAULT_WITHDRAW', amount, 'Vault Withdrawal');
+pages/Coinflip.tsx:98:            <span>Bet Amount (₹)</span>
+pages/Coinflip.tsx:102:            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+pages/Coinflip.tsx:164:              : `Start Flip (₹${bet.toLocaleString('en-IN')})`}
+pages/Coinflip.tsx:173:              Cash Out ₹{currentPayout.toLocaleString('en-IN')} ({currentMult}×)
+pages/Coinflip.tsx:205:              ₹{Math.floor((inStreakSession ? lockedStake : bet) * nextMult).toLocaleString('en-IN')} ({nextMult}×)
+pages/Matka.tsx:236:            <span>Ticket Stake (₹)</span>
+pages/Matka.tsx:238:              Pays: ₹{Math.floor(bet * getMultiplier()).toLocaleString('en-IN')}
+pages/Matka.tsx:242:            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+pages/Matka.tsx:306:                  <span className="text-amber-400 font-bold">₹{t.wager}</span>
+pages/Matka.tsx:323:              ? `Draw ${slip.length} Tickets (₹${totalSlipStake.toLocaleString('en-IN')})`
+pages/Matka.tsx:324:              : `Draw Now (₹${bet.toLocaleString('en-IN')})`}
+pages/Matka.tsx:381:                {winAmount > 0 ? `+₹${winAmount.toLocaleString('en-IN')}` : 'No Match'}
+pages/Lobby.tsx:13:  QrCode,
+pages/Lobby.tsx:219:                Play browser-based games with virtual credits. Credits have no monetary value and cannot be transferred or redeemed.
+pages/AndarBahar.tsx:202:            <span>Main Bet (₹)</span>
+pages/AndarBahar.tsx:203:            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+pages/AndarBahar.tsx:206:            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+pages/AndarBahar.tsx:263:              : `Deal Cards (₹${totalWager.toLocaleString('en-IN')})`}
+pages/AndarBahar.tsx:307:                  ? `Won +₹${resultInfo.payout.toLocaleString('en-IN')}`
+pages/Admin.tsx:16:    gameEngine.deposit(creditAmt, 'VIP House Credit');
+pages/Admin.tsx:53:              ₹{Math.floor(state.balance).toLocaleString('en-IN')}
+pages/Admin.tsx:59:              ₹{Math.floor(state.vipPoints).toLocaleString('en-IN')}
+pages/Admin.tsx:72:            <span className="px-4 flex items-center text-amber-400 font-mono font-bold">₹</span>
+pages/Admin.tsx:84:            <Wallet className="w-4 h-4" /> Credit INR Balance
+pages/Admin.tsx:100:            <RefreshCw className="w-4 h-4" /> Reset to ₹25,000
+index.html:9:    <link rel="preconnect" href="https://fonts.googleapis.com" />
+index.html:10:    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+index.html:11:    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+import React, { useEffect } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import Lobby from './pages/Lobby';
+import Crash from './pages/Crash';
+import { Dice } from './pages/Dice';
+import { Roulette } from './pages/Roulette';
+import { Mines } from './pages/Mines';
+import { Plinko } from './pages/Plinko';
+import { Blackjack } from './pages/Blackjack';
+import { Fairness } from './pages/Fairness';
+import { Wheel } from './pages/Wheel';
+import { Baccarat } from './pages/Baccarat';
+import { Keno } from './pages/Keno';
+import { Transactions } from './pages/Transactions';
+import { Statistics } from './pages/Statistics';
+import { engine } from './services/engine';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, [pathname]);
+  return null;
+}
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error('Uncaught error:', error, errorInfo);
+  }
+
+  handleHardReset = () => {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (e) {}
+    engine.hardReset();
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#070b14] text-white p-6 text-center font-sans">
+          <h1 className="text-3xl font-extrabold text-[#fbbf24] mb-2">Session Reset Required</h1>
+          <p className="text-[#94a3b8] mb-6 max-w-md text-sm">
+            Local session storage encountered an error. Reset the local virtual credit session to continue. VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS. Credits are nontransferable and nonredeemable.
+          </p>
+          <button
+            type="button"
+            onClick={this.handleHardReset}
+            className="px-6 py-3 bg-[#f59e0b] hover:bg-[#fbbf24] text-[#070b14] rounded-xl font-extrabold text-sm shadow-lg"
+          >
+            Reset virtual credit session
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const App: React.FC = () => {
+  return (
+    <ErrorBoundary>
+      <HashRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Lobby />} />
+          <Route path="/crash" element={<Crash />} />
+          <Route path="/dice" element={<Layout><Dice /></Layout>} />
+          <Route path="/roulette" element={<Layout><Roulette /></Layout>} />
+
+          <Route path="/mines" element={<Layout><Mines /></Layout>} />
+          <Route path="/plinko" element={<Layout><Plinko /></Layout>} />
+          <Route path="/blackjack" element={<Layout><Blackjack /></Layout>} />
+
+          <Route path="/fairness" element={<Layout><Fairness /></Layout>} />
+
+          <Route path="/wheel" element={<Layout><Wheel /></Layout>} />
+          <Route path="/baccarat" element={<Layout><Baccarat /></Layout>} />
+          <Route path="/keno" element={<Layout><Keno /></Layout>} />
+          <Route path="/transactions" element={<Layout><Transactions /></Layout>} />
+          <Route path="/statistics" element={<Layout><Statistics /></Layout>} />
+          <Route path="*" element={<Lobby />} />
+        </Routes>
+      </HashRouter>
+    </ErrorBoundary>
+  );
+};
+
+export default App;pages/Lobby.tsx:295:                  const claimed = engine.claimRakeback();
+pages/Admin.tsx:16:    gameEngine.deposit(creditAmt, 'VIP House Credit');
+services/engine.ts:736:  public deposit(amount: number, method = 'UPI Instant (GPay / PhonePe)', utr?: string): string {
+services/engine.ts:744:  public reloadBalance(amount = 25000): string {
+services/engine.ts:745:    return this.deposit(amount, 'Instant Wallet Top-Up');
+services/engine.ts:748:  public withdraw(amount: number, method = 'IMPS / UPI Instant Payout'): { ok: boolean; utr: string } {
+services/engine.ts:756:  public transferToVault(amount: number): boolean {
+services/engine.ts:764:  public withdrawFromVault(amount: number): boolean {
+services/engine.ts:777:  public claimRakeback(): number {
+pages/Crash.tsx:141:      engine.reloadBalance(Math.max(25000, betAmount * 4));
+$ rg -n -i ₹|\bINR\b|\bUPI\b|Paytm|IMPS|merchant|QrCode|withdraw|deposit|transfer App.tsx index.html components pages services
+rg exit: 0
+$ rg -n -i fetch\(|XMLHttpRequest|WebSocket|https?://|window\.open|location\.href|navigator\.sendBeacon|ethereum|solana|walletconnect App.tsx index.html components pages services
+rg exit: 0
+
+Active route module graph:
+
+Public calls to legacy funding/storage methods:
+
+License, Prompt 1 evidence, transfer and architecture preservation against accepted baseline:
+Exit: 0
+
+Nine game source preservation against initial Prompt 2 HEAD:
+Exit: 0
+Archived Bun lock byte-identical: True SHA256 5d6af5deba0e3d2f1b3895649d504d61a289aa0fa82e54ffeba7547ee9d952d1

@@ -1,0 +1,16 @@
+Initial tool preflight observed a clean checkout at the expected SHA. The following reference/status capture was rechecked after the documented closure edits; its modifications are those closure edits.
+1546e39592cc43bbc5f6a341d73f278b19db2a61
+## codex/prompt-02-demo-ui
+ M EXECUTION_STATE.md
+ D bun.lock
+ M components/GameStudioBar.tsx
+ M components/Layout.tsx
+ M docs/evidence/prompt-02/README.md
+ M index.html
+ M package.json
+ M pages/Lobby.tsx
+?? docs/evidence/prompt-02/closure/
+?? docs/legacy/
+?? package-lock.json
+?? public/
+1546e39592cc43bbc5f6a341d73f278b19db2a61	refs/heads/codex/prompt-02-demo-ui

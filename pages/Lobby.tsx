@@ -366,7 +366,6 @@ export default function Lobby() {
             {[
               { id: 'ALL', label: 'All Games (9)' },
               { id: 'ORIGINALS', label: 'Originals' },
-              { id: 'INDIAN', label: 'Indian Classics' },
               { id: 'TABLE', label: 'Table Games' },
               { id: 'JACKPOT', label: 'Draw Games' },
             ].map((tab) => (
@@ -445,7 +444,7 @@ export default function Lobby() {
             to="/transactions"
             className="bg-[#0d1322] border border-white/10 hover:border-[#f59e0b]/50 p-5 rounded-2xl flex items-start gap-3.5 transition-colors"
           >
-            <QrCode className="w-5 h-5 text-[#f59e0b] shrink-0 mt-0.5" />
+            <BarChart2 className="w-5 h-5 text-[#f59e0b] shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-bold text-white">Virtual credit history</h3>
               <p className="text-xs text-[#94a3b8] mt-1 leading-relaxed">

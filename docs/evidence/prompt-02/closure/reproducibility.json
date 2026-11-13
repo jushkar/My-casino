@@ -1,0 +1,26 @@
+{
+  "package-lock.json": {
+    "sha256": "9a60fcd6bf5305124dc7f080bf93933ab84dfc14c10dcecd4d9bb378bc9b48ff",
+    "cleanMatches": true
+  },
+  "package.json": {
+    "sha256": "1a5598a23c7ab6077f59d204593f1bda7c146a7205a604b1a839817ee23d6a5a",
+    "cleanMatches": true
+  },
+  "dist/index.html": {
+    "sha256": "8edc56f44ba428e6b5f5a548e62a2f0f5011552fb25f93f8dfc063690c940279",
+    "cleanMatches": true
+  },
+  "dist/favicon.svg": {
+    "sha256": "43c6647d37d55176d68542f23c3307de394a772025727063b6f45b276fce9232",
+    "cleanMatches": true
+  },
+  "dist/assets/index-C3LiZ7oE.css": {
+    "sha256": "2905bc85b0c4a16a35958938d47c7db12e28fbead1cef8f9fed83fdf65d2722f",
+    "cleanMatches": true
+  },
+  "dist/assets/index-BMhBsxkE.js": {
+    "sha256": "5fc589526edb72e38f3eca45bd870de99520d8293f0ad52220472c0926c7519c",
+    "cleanMatches": true
+  }
+}

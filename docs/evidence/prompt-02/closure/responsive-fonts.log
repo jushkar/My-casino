@@ -1,0 +1,11 @@
+crash {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":429,"client":182},{"tag":"DIV","scroll":545,"client":368}]}
+dice {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+mines {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+roulette {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":692,"client":368},{"tag":"DIV","scroll":545,"client":368}]}
+blackjack {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+baccarat {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+plinko {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+keno {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+wheel {"document":[390,390],"main":[390,390],"header":[390,390],"scrollAreas":[{"tag":"DIV","scroll":545,"client":368}]}
+Actual fallback heading fonts: {"fonts":[{"familyName":"Liberation Sans","postScriptName":"LiberationSans-Bold","isCustomFont":false,"glyphCount":32}]}
+Font faces: []

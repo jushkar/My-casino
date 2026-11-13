@@ -1,0 +1,43 @@
+{
+  "rootScripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "lockVersion": 3,
+  "registryHosts": [
+    "registry.npmjs.org"
+  ],
+  "installedHooks": [
+    {
+      "package": "node_modules/esbuild",
+      "version": "0.21.5",
+      "scripts": {
+        "postinstall": "node install.js"
+      }
+    },
+    {
+      "package": "node_modules/postcss-selector-parser",
+      "version": "6.1.6",
+      "scripts": {
+        "prepare": "del-cli dist && BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/"
+      }
+    },
+    {
+      "package": "node_modules/recharts",
+      "version": "2.15.4",
+      "scripts": {
+        "prepare": "husky install"
+      }
+    },
+    {
+      "package": "node_modules/rollup",
+      "version": "4.68.3",
+      "scripts": {
+        "prepare": "husky && npm run prepare:patch && node scripts/check-release.js || npm run build:prepare"
+      }
+    }
+  ],
+  "allInstallHooksSkipped": true
+}

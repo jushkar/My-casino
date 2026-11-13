@@ -1,0 +1,77 @@
+{"viewport":1440,"route":"lobby","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"crash","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"dice","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"mines","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"roulette","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"blackjack","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"baccarat","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"plinko","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"keno","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"wheel","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"transactions","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"statistics","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":1440,"route":"fairness","result":"PASS","overflow":{"scroll":1440,"width":1440},"wallet":"close/escape/tab/focus return; no payment fields"}
+NAV PASS 1440 crash
+NAV PASS 1440 dice
+NAV PASS 1440 mines
+NAV PASS 1440 roulette
+NAV PASS 1440 blackjack
+NAV PASS 1440 baccarat
+NAV PASS 1440 plinko
+NAV PASS 1440 keno
+NAV PASS 1440 wheel
+DIRECT DENIAL PASS 1440 slots
+DIRECT DENIAL PASS 1440 teenpatti
+DIRECT DENIAL PASS 1440 matka
+DIRECT DENIAL PASS 1440 admin
+DIRECT DENIAL PASS 1440 coinflip
+DIRECT DENIAL PASS 1440 andarbahar
+DIRECT DENIAL PASS 1440 poker
+DIRECT DENIAL PASS 1440 live-casino
+DIRECT DENIAL PASS 1440 slots/
+DIRECT DENIAL PASS 1440 ADMIN
+DIRECT DENIAL PASS 1440 cashier
+DIRECT DENIAL PASS 1440 deposit
+DIRECT DENIAL PASS 1440 withdraw
+DIRECT DENIAL PASS 1440 wallet
+LINKS 1440 ["#/","#/crash","#/blackjack","#/fairness","#/mines","#/plinko","#/roulette","#/baccarat","#/wheel","#/keno","#/dice","#/statistics","#/transactions"]
+NETWORK 1440 {"external":[{"url":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","method":"GET","type":"stylesheet"}],"httpErrors":[],"failed":[{"url":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","reason":"net::ERR_TUNNEL_CONNECTION_FAILED"}],"pageErrors":[]}
+{"viewport":390,"route":"lobby","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"crash","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"dice","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"mines","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"roulette","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"blackjack","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"baccarat","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"plinko","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"keno","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"wheel","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"transactions","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"statistics","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+{"viewport":390,"route":"fairness","result":"PASS","overflow":{"scroll":390,"width":390},"wallet":"close/escape/tab/focus return; no payment fields"}
+NAV PASS 390 crash
+NAV PASS 390 dice
+NAV PASS 390 mines
+NAV PASS 390 roulette
+NAV PASS 390 blackjack
+NAV PASS 390 baccarat
+NAV PASS 390 plinko
+NAV PASS 390 keno
+NAV PASS 390 wheel
+DIRECT DENIAL PASS 390 slots
+DIRECT DENIAL PASS 390 teenpatti
+DIRECT DENIAL PASS 390 matka
+DIRECT DENIAL PASS 390 admin
+DIRECT DENIAL PASS 390 coinflip
+DIRECT DENIAL PASS 390 andarbahar
+DIRECT DENIAL PASS 390 poker
+DIRECT DENIAL PASS 390 live-casino
+DIRECT DENIAL PASS 390 slots/
+DIRECT DENIAL PASS 390 ADMIN
+DIRECT DENIAL PASS 390 cashier
+DIRECT DENIAL PASS 390 deposit
+DIRECT DENIAL PASS 390 withdraw
+DIRECT DENIAL PASS 390 wallet
+LINKS 390 ["#/","#/crash","#/blackjack","#/fairness","#/mines","#/plinko","#/roulette","#/baccarat","#/wheel","#/keno","#/dice","#/statistics","#/transactions"]
+NETWORK 390 {"external":[{"url":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","method":"GET","type":"stylesheet"}],"httpErrors":[],"failed":[{"url":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","reason":"net::ERR_TUNNEL_CONNECTION_FAILED"}],"pageErrors":[]}
+Exit: 0

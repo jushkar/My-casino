@@ -1,0 +1,21 @@
+CONSOLE Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED {
+  url: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+  line: 0,
+  column: 0,
+  lineNumber: 0,
+  columnNumber: 0
+}
+{"event":"FAILED","error":"net::ERR_TUNNEL_CONNECTION_FAILED","url":"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap","type":"Stylesheet","initiator":{"type":"parser","url":"http://127.0.0.1:3000/","lineNumber":16,"columnNumber":211}}
+CONSOLE Failed to load resource: the server responded with a status of 404 (Not Found) {
+  url: 'http://127.0.0.1:3000/favicon.ico',
+  line: 0,
+  column: 0,
+  lineNumber: 0,
+  columnNumber: 0
+}
+{"event":"HTTP_ERROR","status":404,"url":"http://127.0.0.1:3000/favicon.ico","type":"Other","initiator":{"type":"other"}}
+FONT FALLBACK {
+  body: '"Plus Jakarta Sans", system-ui, -apple-system, sans-serif',
+  fontsLoaded: [],
+  canvas: false
+}

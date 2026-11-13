@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { engine, formatINR, generateUTR } from '../services/engine';
+import { engine, formatINR } from '../services/engine';
 import { audio } from '../services/audio';
-import { LiveFeed } from './LiveFeed';
 import { GameStudioBar } from './GameStudioBar';
 import {
   TrendingUp,
@@ -11,16 +10,13 @@ import {
   Dices,
   Hash,
   CircleDot,
-  Coins,
   Spade,
   Award,
   Sparkles,
   Layers,
-  Vault,
   BarChart2,
   Receipt,
   ShieldCheck,
-  Sliders,
   Volume2,
   VolumeX,
   Wallet,
@@ -29,10 +25,6 @@ import {
   X,
   RotateCcw,
   Zap,
-  CheckCircle2,
-  QrCode,
-  Building2,
-  Smartphone,
   Crown,
 } from 'lucide-react';
 
@@ -42,33 +34,48 @@ const PAGE_TITLES: Record<string, string> = {
   '/mines': 'Gold Mines',
   '/plinko': 'Plinko 1000x',
   '/roulette': 'European Roulette',
-  '/matka': 'Kalyan Matka Draw',
-  '/teenpatti': 'Teen Patti (3-Card Poker)',
-  '/andarbahar': 'Andar Bahar',
   '/blackjack': 'VIP Blackjack 21',
   '/baccarat': 'Punto Baccarat',
-  '/slots': 'Diamond Slots',
   '/wheel': 'Fortune Wheel',
   '/keno': 'Keno 40',
   '/dice': 'Classic Dice',
-  '/coinflip': 'Coin Flip',
   '/statistics': 'Statistics & P&L',
   '/transactions': 'Transactions & Receipts',
   '/fairness': 'Provably Fair Verifier',
-  '/admin': 'Risk & RTP Console',
 };
 
 export const WalletModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const [session, setSession] = useState(engine.getSession());
+  const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => engine.subscribe(setSession), []);
+  useEffect(() => {
+    if (!open) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        closeRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [open, onClose]);
   if (!open) return null;
   return <div className="fixed inset-0 z-[1300] bg-black/80 flex items-center justify-center p-4" onClick={onClose}>
-    <div role="dialog" aria-label="Virtual credits" className="bg-[#0d1322] border border-white/10 rounded-2xl p-6 max-w-lg space-y-4" onClick={e => e.stopPropagation()}>
+    <div role="dialog" aria-modal="true" aria-label="Virtual credits" className="bg-[#0d1322] border border-white/10 rounded-2xl p-6 max-w-lg max-h-[90dvh] overflow-y-auto space-y-4" onClick={e => e.stopPropagation()}>
       <h2 className="text-xl font-bold">Virtual credits</h2>
       <p>Balance: {formatINR(session.balance)} credits</p>
       <p>VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS.</p>
       <p>Credits are nontransferable and nonredeemable. This balance exists only in this browser.</p>
-      <button className="px-4 py-2 bg-amber-500 text-black rounded-xl" onClick={onClose}>Close</button>
+      <button ref={closeRef} type="button" className="px-4 py-2 bg-amber-500 text-black rounded-xl" onClick={onClose}>Close</button>
     </div>
   </div>;
 };
@@ -137,8 +144,10 @@ const Sidebar = memo(
     return (
       <>
         <aside
+          id="games-sidebar"
+          aria-label="Games navigation"
           className={`fixed lg:static inset-y-0 left-0 z-[1200] w-64 lg:w-60 bg-[#0d1322] border-r border-white/10 flex flex-col transition-transform duration-200 ease-out shrink-0 ${
-            open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+            open ? 'visible translate-x-0' : 'invisible lg:visible -translate-x-full lg:translate-x-0'
           }`}
         >
           <div className="lg:hidden h-14 px-4 border-b border-white/10 flex items-center justify-between bg-[#070b14] shrink-0">
@@ -148,6 +157,7 @@ const Sidebar = memo(
             <button
               type="button"
               onClick={() => setOpen(false)}
+              aria-label="Close games navigation"
               className="p-1.5 rounded-lg text-[#94a3b8] hover:text-white bg-[#131c31]"
             >
               <X className="w-4 h-4" />
@@ -224,6 +234,7 @@ const Sidebar = memo(
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [walletOpen, setWalletOpen] = useState(false);
+  const closeWallet = useCallback(() => setWalletOpen(false), []);
   const [feedOpen, setFeedOpen] = useState(false);
   const [soundOn, setSoundOn] = useState(audio.isEnabled);
   const [balance, setBalance] = useState(engine.getSession().balance);
@@ -268,6 +279,12 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   };
 
   const currentPageTitle = PAGE_TITLES[location.pathname] || 'Casino';
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setSidebarOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [sidebarOpen]);
 
   return (
     <div className="flex flex-col min-h-screen min-h-[100dvh] lg:h-[100dvh] w-full bg-[#070b14] text-white lg:overflow-hidden">
@@ -324,7 +341,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           <Link
             to="/blackjack"
             className={`hover:text-white transition-colors whitespace-nowrap shrink-0 ${
-              ['/blackjack', '/baccarat', '/slots', '/wheel', '/keno', '/dice', '/coinflip'].includes(
+              ['/blackjack', '/baccarat', '/wheel', '/keno', '/dice'].includes(
                 location.pathname
               )
                 ? 'text-[#fbbf24]'
@@ -343,7 +360,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           </Link>
         </nav>
 
-        {/* Zone 3: 1 Primary Action (INR Wallet & Instant Deposit Button) */}
+        {/* Virtual balance information */}
         <div className="flex items-center shrink-0">
           <button
             type="button"
@@ -376,6 +393,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <button
                 type="button"
                 onClick={() => setSidebarOpen(true)}
+                aria-controls="games-sidebar"
+                aria-expanded={sidebarOpen}
                 className="lg:hidden flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#131c31] border border-white/10 text-xs font-bold text-[#fbbf24] hover:text-white whitespace-nowrap shrink-0"
               >
                 <Menu className="w-3.5 h-3.5" />
@@ -422,6 +441,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <button
                 type="button"
                 onClick={() => setFeedOpen(!feedOpen)}
+                aria-label="Demo info"
                 className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 whitespace-nowrap ${
                   feedOpen
                     ? 'bg-[#f59e0b] text-[#070b14]'
@@ -429,7 +449,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 }`}
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Live Feed</span>
+                <span className="hidden sm:inline">Demo info</span>
               </button>
             </div>
           </div>
@@ -507,10 +527,11 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             />
             <div className="fixed lg:static inset-y-0 right-0 w-80 max-w-[90vw] bg-[#0d1322] border-l border-white/10 z-[1200] flex flex-col shrink-0">
               <div className="h-10 px-4 border-b border-white/10 flex items-center justify-between">
-                <span className="text-xs font-bold text-[#fbbf24]">Live Bets & Players Chat</span>
+                <span className="text-xs font-bold text-[#fbbf24]">Virtual play information</span>
                 <button
                   type="button"
                   onClick={() => setFeedOpen(false)}
+                  aria-label="Close virtual play information"
                   className="text-[#94a3b8] hover:text-white p-1"
                 >
                   <X className="w-4 h-4" />
@@ -524,7 +545,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         )}
       </div>
 
-      <WalletModal open={walletOpen} onClose={() => setWalletOpen(false)} />
+      <WalletModal open={walletOpen} onClose={closeWallet} />
     </div>
   );
 };

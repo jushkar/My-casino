@@ -65,33 +65,6 @@ const GAME_META: Record<string, GameMeta> = {
       'Single-zero European wheel (pockets 0–36). Place Straight Up (36×), Dozen (3×), Column (3×), or French Racetrack sector bets.',
     mathFormula: 'WinningPocket = floor(r * 37) in {0..36}',
   },
-  '/matka': {
-    title: 'Kalyan Matka',
-    rtp: '95.00%',
-    edge: '5.00%',
-    maxWin: '600×',
-    summary:
-      'Official 3-card Indian number draw. Bet on Single Digit (0–9, 9.5×), Double Digit Pair (00–99, 95×), 3-Card Combo (150×–600×), or Even/Odd.',
-    mathFormula: 'SingleDigit = (Card1 + Card2 + Card3) mod 10',
-  },
-  '/teenpatti': {
-    title: 'Teen Patti Royal',
-    rtp: '97.50%',
-    edge: '2.50%',
-    maxWin: '40×',
-    summary:
-      '3-Card Indian Poker against the Dealer. Play Seen (1.95×) or Blind (2.10×) plus optional Pair Plus bonus payouts up to 40×.',
-    mathFormula: '52-Card Fisher-Yates Permutation via HMAC-SHA256 Byte Stream',
-  },
-  '/andarbahar': {
-    title: 'Andar Bahar Live',
-    rtp: '98.00%',
-    edge: '2.00%',
-    maxWin: '8.00×',
-    summary:
-      'Alternating cards are dealt to Inside (Andar 1.90×) and Outside (Bahar 2.00×) until a card matches the Target Joker rank.',
-    mathFormula: '52-Card Alternating Deal until Rank(Card_k) == Rank(Joker)',
-  },
   '/blackjack': {
     title: 'Blackjack 21',
     rtp: '99.50%',
@@ -109,15 +82,6 @@ const GAME_META: Record<string, GameMeta> = {
     summary:
       'Punto Banco Macau rules. Closest hand modulo 10 to 9 wins. Includes official conditional 3rd-card draw tableau and 12× Pair side bets.',
     mathFormula: 'HandScore = (Card1 + Card2 [+ Card3]) mod 10',
-  },
-  '/slots': {
-    title: 'Maharaja Gold Slots',
-    rtp: '97.00%',
-    edge: '3.00%',
-    maxWin: '300×',
-    summary:
-      '5×3 10-Payline Video Slot Machine featuring Royal Crown Wilds and Kohinoor Scatters that trigger 5 Free Spins at 3× Multiplier.',
-    mathFormula: '15 Independent HMAC-SHA256 Reel Stops Evaluated Across 10 Paylines',
   },
   '/wheel': {
     title: 'Fortune Wheel',
@@ -145,15 +109,6 @@ const GAME_META: Record<string, GameMeta> = {
     summary:
       'Set your target threshold between 2 and 98 and choose Roll Over or Roll Under for linked probability and multiplier payouts.',
     mathFormula: 'Roll = floor(r * 10000) / 100, Multiplier = 99 / WinChance',
-  },
-  '/coinflip': {
-    title: 'Coin Flip Streak',
-    rtp: '99.00%',
-    edge: '1.00%',
-    maxWin: '63.36×+',
-    summary:
-      'Pick Heads or Tails. Cash out after 1 hit (1.98×) or let your winnings ride across a compounding win streak.',
-    mathFormula: 'Multiplier(k) = 0.99 * 2^k',
   },
 };
 

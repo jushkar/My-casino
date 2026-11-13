@@ -1,0 +1,49 @@
+UTC 2026-11-13T19:22:56.969303+00:00
+Clean directory: /tmp/my-casino-clean-s88fo6ro
+No node_modules copied. npm ci uses committed lock; install hooks disabled.
+
+$ npm ci --ignore-scripts --no-audit --no-fund
+
+added 174 packages in 11s
+Exit: 0
+
+$ npm ls --depth=0
+maharaja-club-casino@2.0.0 /tmp/my-casino-clean-s88fo6ro
+├── @types/react-dom@18.3.7
+├── @types/react@18.3.31
+├── @vitejs/plugin-react@4.7.0
+├── autoprefixer@10.6.2
+├── lucide-react@1.72.0
+├── postcss@8.5.32
+├── react-dom@18.3.1
+├── react-router-dom@6.30.6
+├── react@18.3.1
+├── recharts@2.15.4
+├── tailwindcss@3.4.19
+├── typescript@5.9.3
+└── vite@5.4.21
+
+Exit: 0
+
+$ npm run typecheck
+
+> maharaja-club-casino@2.0.0 typecheck
+> tsc --noEmit
+
+Exit: 0
+
+$ npm run build
+
+> maharaja-club-casino@2.0.0 build
+> tsc && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 2121 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.08 kB │ gzip:   0.58 kB
+dist/assets/index-C3LiZ7oE.css   60.33 kB │ gzip:   9.97 kB
+dist/assets/index-opr4onez.js   382.84 kB │ gzip: 104.06 kB
+✓ built in 3.97s
+Exit: 0
