@@ -1,0 +1,17 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { buildApp } from './app.js';
+
+test('staff routes fail closed for anonymous and forged requests', async () => {
+  const app = buildApp();
+  try {
+    for (const method of ['GET', 'POST']) {
+      for (const url of ['/staff', '/staff/anything', '/api/staff', '/api/staff/records']) {
+        const response = await app.inject({ method, url, headers: { 'x-role': 'admin', origin: 'https://attacker.example' } });
+        assert.equal(response.statusCode, 503, `${method} ${url}`);
+        assert.equal(response.headers['cache-control'], 'no-store');
+        assert.deepEqual(response.json(), { error: 'Staff service unavailable' });
+      }
+    }
+  } finally { await app.close(); }
+});

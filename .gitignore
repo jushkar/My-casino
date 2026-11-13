@@ -7,3 +7,6 @@ dist/
 coverage/
 playwright-report/
 test-results/
+
+# Supabase CLI runtime metadata
+supabase/.temp/

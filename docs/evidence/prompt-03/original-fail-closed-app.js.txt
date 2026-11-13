@@ -1,0 +1,18 @@
+import Fastify from 'fastify';
+
+// Fail closed until the provider-backed session, authorization and database gates
+// described in ADR-001 are implemented and tested. No data is exposed here.
+export function buildApp() {
+  const app = Fastify({ logger: false, bodyLimit: 4096 });
+  app.addHook('onSend', async (_request, reply, payload) => {
+    reply.header('Cache-Control', 'no-store');
+    reply.header('X-Content-Type-Options', 'nosniff');
+    return payload;
+  });
+  const unavailable = async (_request, reply) => reply.code(503).send({ error: 'Staff service unavailable' });
+  app.all('/staff', unavailable);
+  app.all('/staff/*', unavailable);
+  app.all('/api/staff', unavailable);
+  app.all('/api/staff/*', unavailable);
+  return app;
+}

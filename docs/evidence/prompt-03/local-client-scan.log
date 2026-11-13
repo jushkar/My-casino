@@ -1,0 +1,1 @@
+PASS: server-only synthetic canary and selected privileged key patterns absent from client build; this is not a comprehensive secrets audit

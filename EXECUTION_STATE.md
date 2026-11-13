@@ -1,3 +1,30 @@
+# Prompt 3 local implementation recovery — PARTIAL / BLOCKED
+
+- Branch `codex/prompt-03-staff-foundation` is based on accepted Prompt 2 `879977e43db29eea8de20b5255c0404f09f8eb19`. No Prompt 4 work or deployment.
+- Loopback-only Fastify staff UI/API and Supabase SSR integration, isolated security tests, and a draft least-privilege migration were prepared. Production startup is disabled. Migration/provider settings have not been changed; explicit owner approval and real PostgreSQL validation are required. See `docs/evidence/prompt-03/provider-change-plan.md`.
+- Clean npm install, frontend typecheck/build, server JavaScript syntax and isolated fake-provider security tests passed. The rate limit test initially failed due to plugin registration order and passed after correction. An initial browser smoke had a Mines test-harness failure when the first tile was a mine; the corrected rerun passed all nine games and Crash auto cashout. Optional Google Fonts failed through the proxy. Detailed logs and limitations are in `docs/evidence/prompt-03/README.md`.
+- Direct Supabase HTTPS remains blocked by proxy CONNECT 403. Real identity/MFA, sessions, RLS, audit and persistence remain unverified. Owner-controlled test identities and MFA enrollment, migration/security-setting review and explicit approval, network access, and a security review are needed. Never deploy based on mocked results.
+
+---
+
+# Prompt 3 recovery — BLOCKED, 2026-11-13 UTC
+
+- Existing uncommitted scaffold recovered intact in `codex/prompt-03-staff-foundation`; HEAD remains accepted Prompt 2 `879977e43db29eea8de20b5255c0404f09f8eb19`. Remote Prompt 3 branch does not exist.
+- Supabase connector read the specified healthy development project: public tables/policies and migration history empty; zero Auth users, MFA factors and sessions. No provider change was made. Auth security configuration is not exposed by the connector and remains unverified.
+- Direct Auth endpoint access from the execution environment failed at the proxy with CONNECT 403; provider-dependent work stopped as instructed. Enable access to the project endpoint from the execution environment or provide an environment that can reach it. Explicit approval remains required for a concrete migration or Auth settings change before application. Test identities and MFA enrollment will also require owner interaction.
+- Repeat clean install, frontend typecheck/build, and 503 scaffold test passed. Nine browser game cycles including Crash manual/auto cashout passed; optional Google Fonts request failed through the proxy. Staff authentication, MFA, sessions, authorization, RLS and persistence are not implemented or verified. See `docs/evidence/prompt-03/README.md` for evidence and limitations. No commit, push, deployment or Prompt 4 work.
+
+---
+
+# Prompt 3/10 — BLOCKED (local work in progress)
+
+- Accepted Prompt 2 base verified at `879977e43db29eea8de20b5255c0404f09f8eb19`; local worktree branch `codex/prompt-03-staff-foundation`.
+- Local-only Fastify fail-closed 503 scaffold, placeholder environment names and local test are present. This is not working staff authentication, MFA or persistence. No migration or privileged endpoint exists. Do not expose the scaffold.
+- Clean installation, typecheck, production build and scaffold test passed. Provider integration, 401/403, session/CSRF, RLS, persistence and current browser regression remain unverified. See `docs/evidence/prompt-03/README.md` and logs.
+- Supabase project list was empty. Owner must identify and authorize a suitable test project, staff/non-staff identities and MFA readiness, project region and origin; no resources were created. Full Prompt 3 implementation remains outstanding. No push, deployment or Prompt 4 work occurred.
+
+---
+
 # My Casino Execution State
 
 - Current milestone: **Prompt 2/10 PASS — acceptance closure**, 2026-11-13 UTC. Prompt 3 has not started. This is the scoped frontend gate, not full demo/release acceptance.
