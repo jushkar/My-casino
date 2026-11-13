@@ -453,10 +453,10 @@ export default function Crash() {
                 </button>
               </div>
 
-              {/* Bet Amount with Quick INR Chips */}
+              {/* Bet Amount with Quick credits Chips */}
               <div>
                 <div className="flex justify-between text-xs font-semibold text-[#94a3b8] mb-1.5">
-                  <span>Bet Amount (₹)</span>
+                  <span>Bet Amount (credits )</span>
                   <span className="font-mono text-[#fbbf24] font-bold tabular-nums">
                     {formatINR(betAmount)}
                   </span>
@@ -495,7 +495,7 @@ export default function Crash() {
                       disabled={isRoundBusy || autoActive}
                       className="py-1.5 bg-[#070b14] hover:bg-[#1d2a47] border border-white/10 rounded-lg text-[11px] font-mono font-bold text-[#fbbf24] tabular-nums"
                     >
-                      ₹{chip >= 1000 ? `${chip / 1000}K` : chip}
+                      credits {chip >= 1000 ? `${chip / 1000}K` : chip}
                     </button>
                   ))}
                 </div>

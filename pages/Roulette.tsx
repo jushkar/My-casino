@@ -174,7 +174,7 @@ export const Roulette: React.FC = () => {
         {/* Chip Selector */}
         <div>
           <label className="block text-xs font-semibold text-slate-400 mb-2">
-            Select Chip Value (₹)
+            Select Chip Value (credits )
           </label>
           <div className="grid grid-cols-5 gap-2">
             {[50, 100, 500, 1000, 5000].map((val) => (
@@ -198,7 +198,7 @@ export const Roulette: React.FC = () => {
           <div>
             <div className="text-[11px] font-semibold text-slate-400">Total Table Bet</div>
             <div className="text-lg font-mono font-black text-white">
-              ₹{totalBet.toLocaleString('en-IN')}
+              credits {totalBet.toLocaleString('en-IN')}
             </div>
           </div>
           <div className="flex gap-1.5">
@@ -244,7 +244,7 @@ export const Roulette: React.FC = () => {
               >
                 <div className="text-[11px] font-black text-white truncate">{call.name}</div>
                 <div className="text-[9px] font-mono text-slate-400">
-                  {call.numbers.length} Chips (₹{(call.numbers.length * selectedChip).toLocaleString('en-IN')})
+                  {call.numbers.length} Chips (credits {(call.numbers.length * selectedChip).toLocaleString('en-IN')})
                 </div>
               </button>
             ))}
@@ -264,7 +264,7 @@ export const Roulette: React.FC = () => {
             (Object.entries(bets) as [string, number][]).map(([spot, amt]) => (
               <div key={spot} className="flex justify-between text-xs font-mono">
                 <span className="text-slate-300 font-semibold">{spot.replace('N_', 'Straight #')}</span>
-                <span className="text-amber-400 font-bold">₹{amt.toLocaleString('en-IN')}</span>
+                <span className="text-amber-400 font-bold">credits {amt.toLocaleString('en-IN')}</span>
               </div>
             ))
           )}
@@ -280,7 +280,7 @@ export const Roulette: React.FC = () => {
             {spinning
               ? 'Spinning Wheel...'
               : totalBet > 0
-              ? `Spin Wheel (₹${totalBet.toLocaleString('en-IN')})`
+              ? `Spin Wheel (credits ${totalBet.toLocaleString('en-IN')})`
               : 'Place Chips to Spin'}
           </button>
         </div>
@@ -363,7 +363,7 @@ export const Roulette: React.FC = () => {
               </div>
               {winPayout > 0 && (
                 <div className="text-sm font-mono font-bold text-emerald-400 mt-0.5">
-                  Won +₹{winPayout.toLocaleString('en-IN')}!
+                  Won +credits {winPayout.toLocaleString('en-IN')}!
                 </div>
               )}
             </div>
@@ -457,7 +457,7 @@ export const Roulette: React.FC = () => {
                 {d.label}
                 {bets[d.id] && (
                   <span className="ml-2 bg-amber-400 text-slate-950 text-[10px] font-mono font-black px-2 py-0.5 rounded-full">
-                    ₹{bets[d.id]}
+                    credits {bets[d.id]}
                   </span>
                 )}
               </button>
@@ -482,7 +482,7 @@ export const Roulette: React.FC = () => {
                 {o.label}
                 {bets[o.id] && (
                   <span className="ml-1.5 bg-amber-400 text-slate-950 text-[10px] font-mono font-black px-1.5 py-0.5 rounded-full">
-                    ₹{bets[o.id]}
+                    credits {bets[o.id]}
                   </span>
                 )}
               </button>

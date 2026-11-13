@@ -239,7 +239,7 @@ export const GameStudioBar: React.FC<{ pathname: string }> = ({ pathname }) => {
                 netProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'
               }`}
             >
-              ({netProfit >= 0 ? '+' : ''}₹{Math.floor(netProfit).toLocaleString('en-IN')})
+              ({netProfit >= 0 ? '+' : ''}credits {Math.floor(netProfit).toLocaleString('en-IN')})
             </span>
           </button>
 

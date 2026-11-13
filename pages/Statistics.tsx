@@ -42,7 +42,7 @@ export const Statistics: React.FC = () => {
             <BarChart3 className="w-4 h-4 text-amber-400" />
           </div>
           <div className="text-2xl font-mono font-black text-white">
-            ₹{Math.floor(state.stats.totalWagered).toLocaleString('en-IN')}
+            credits {Math.floor(state.stats.totalWagered).toLocaleString('en-IN')}
           </div>
         </div>
 
@@ -56,7 +56,7 @@ export const Statistics: React.FC = () => {
               state.stats.netProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'
             }`}
           >
-            {state.stats.netProfit >= 0 ? '+' : ''}₹
+            {state.stats.netProfit >= 0 ? '+' : ''}credits
             {Math.floor(state.stats.netProfit).toLocaleString('en-IN')}
           </div>
         </div>
@@ -110,7 +110,7 @@ export const Statistics: React.FC = () => {
                       <td className="py-3 px-5 font-bold text-white">{gameName}</td>
                       <td className="py-3 px-5 font-mono text-slate-300">{gs.bets}</td>
                       <td className="py-3 px-5 font-mono text-slate-300">
-                        ₹{Math.floor(gs.wagered).toLocaleString('en-IN')}
+                        credits {Math.floor(gs.wagered).toLocaleString('en-IN')}
                       </td>
                       <td className="py-3 px-5 font-mono text-amber-400">{rtp}%</td>
                       <td
@@ -118,7 +118,7 @@ export const Statistics: React.FC = () => {
                           net >= 0 ? 'text-emerald-400' : 'text-rose-400'
                         }`}
                       >
-                        {net >= 0 ? '+' : ''}₹{Math.floor(net).toLocaleString('en-IN')}
+                        {net >= 0 ? '+' : ''}credits {Math.floor(net).toLocaleString('en-IN')}
                       </td>
                     </tr>
                   );
@@ -149,7 +149,7 @@ export const Statistics: React.FC = () => {
                   <th className="py-3 px-5">Game</th>
                   <th className="py-3 px-5">Bet Amount</th>
                   <th className="py-3 px-5">Multiplier</th>
-                  <th className="py-3 px-5 text-right">Payout (INR)</th>
+                  <th className="py-3 px-5 text-right">Payout (credits)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -157,7 +157,7 @@ export const Statistics: React.FC = () => {
                   <tr key={b.id} className="hover:bg-white/[0.02]">
                     <td className="py-3 px-5 font-bold text-white">{b.game}</td>
                     <td className="py-3 px-5 font-mono text-slate-300">
-                      ₹{b.wager.toLocaleString('en-IN')}
+                      credits {b.wager.toLocaleString('en-IN')}
                     </td>
                     <td className="py-3 px-5 font-mono font-bold text-amber-400">
                       {b.multiplier.toFixed(2)}×
@@ -167,7 +167,7 @@ export const Statistics: React.FC = () => {
                         b.payout > 0 ? 'text-emerald-400' : 'text-slate-500'
                       }`}
                     >
-                      {b.payout > 0 ? `+₹${Math.floor(b.payout).toLocaleString('en-IN')}` : '₹0'}
+                      {b.payout > 0 ? `+credits ${Math.floor(b.payout).toLocaleString('en-IN')}` : 'credits 0'}
                     </td>
                   </tr>
                 ))}

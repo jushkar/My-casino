@@ -74,36 +74,6 @@ const GAMES_CATALOG: GameCatalogItem[] = [
     featured: true,
   },
   {
-    id: 'matka',
-    title: 'Kalyan Matka',
-    to: '/matka',
-    category: 'INDIAN',
-    rtp: '95.0% RTP',
-    maxWin: '600× Max',
-    desc: 'Single Digit (9.5×), Double Digit (95×) & 3-Card Combos',
-    playersOnline: 530,
-  },
-  {
-    id: 'teenpatti',
-    title: 'Teen Patti Poker',
-    to: '/teenpatti',
-    category: 'INDIAN',
-    rtp: '97.5% RTP',
-    maxWin: '5× Trail Bonus',
-    desc: '3-card Indian poker — play Seen or Blind against the Dealer',
-    playersOnline: 476,
-  },
-  {
-    id: 'andarbahar',
-    title: 'Andar Bahar',
-    to: '/andarbahar',
-    category: 'INDIAN',
-    rtp: '98.0% RTP',
-    maxWin: '3.5× Fast Match',
-    desc: 'Classic Indian Inside vs Outside card matching table',
-    playersOnline: 364,
-  },
-  {
     id: 'blackjack',
     title: 'VIP Blackjack 21',
     to: '/blackjack',
@@ -122,16 +92,6 @@ const GAMES_CATALOG: GameCatalogItem[] = [
     maxWin: '9× Tie Payout',
     desc: 'Player, Banker & Tie with official 3rd-card draw rules',
     playersOnline: 194,
-  },
-  {
-    id: 'slots',
-    title: 'Diamond Slots',
-    to: '/slots',
-    category: 'JACKPOT',
-    rtp: '97.0% RTP',
-    maxWin: '500× Jackpot',
-    desc: '5-reel multi-payline slot machine with Diamond Wilds',
-    playersOnline: 287,
   },
   {
     id: 'wheel',
@@ -163,16 +123,6 @@ const GAMES_CATALOG: GameCatalogItem[] = [
     desc: 'Precision 0–100 roll slider with customizable win chance',
     playersOnline: 251,
   },
-  {
-    id: 'coinflip',
-    title: 'Coin Flip',
-    to: '/coinflip',
-    category: 'INDIAN',
-    rtp: '98.0% RTP',
-    maxWin: 'Unlimited Streak',
-    desc: 'Heads or Tails double-or-nothing multiplier chain',
-    playersOnline: 209,
-  },
 ];
 
 export default function Lobby() {
@@ -180,31 +130,14 @@ export default function Lobby() {
   const [filter, setFilter] = useState<'ALL' | 'ORIGINALS' | 'INDIAN' | 'TABLE' | 'JACKPOT'>('ALL');
   const [search, setSearch] = useState('');
   const [topupNotice, setTopupNotice] = useState<string | null>(null);
-  const [jackpotPool, setJackpotPool] = useState<number>(4892450);
-  const [quickDigit, setQuickDigit] = useState<number>(7);
-  const [quickMatkaResult, setQuickMatkaResult] = useState<{
-    panna: string;
-    digit: number;
-    pair: string;
-    won: boolean;
-    payout: number;
-  } | null>(null);
-  const [drawingQuickMatka, setDrawingQuickMatka] = useState(false);
-
   const topupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const matkaTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const unsub = engine.subscribe((s) => setSession(s));
-    const jpInterval = setInterval(() => {
-      setJackpotPool((prev) => prev + Math.floor(150 + Math.random() * 680));
-    }, 1800);
 
     return () => {
       unsub();
-      clearInterval(jpInterval);
       if (topupTimerRef.current) clearTimeout(topupTimerRef.current);
-      if (matkaTimerRef.current) clearTimeout(matkaTimerRef.current);
     };
   }, []);
 
@@ -225,60 +158,6 @@ export default function Lobby() {
     if (topupTimerRef.current) clearTimeout(topupTimerRef.current);
     setTopupNotice(msg);
     topupTimerRef.current = setTimeout(() => setTopupNotice(null), 4000);
-  };
-
-  const handleQuickUpiDeposit = () => {
-    const utr = engine.deposit(5000, 'Instant UPI Quick Credit');
-    audio.playWin();
-    showNotice(`+₹5,000 credited via Instant UPI · Ref #${utr}`);
-  };
-
-  const handleClaimBonus = () => {
-    const amounts = [1000, 2500, 5000];
-    const bonus = amounts[Math.floor(Math.random() * amounts.length)];
-    const utr = engine.deposit(bonus, 'Daily VIP Bonus Reward');
-    audio.playWin();
-    showNotice(`Daily Bonus Claimed! +${formatINR(bonus, 0)} added to Wallet · #${utr}`);
-  };
-
-  const handleQuickMatkaPlay = () => {
-    if (drawingQuickMatka) return;
-    const stake = 500;
-    if (engine.getSession().balance < stake) {
-      engine.reloadBalance(10000);
-    }
-    setDrawingQuickMatka(true);
-    setQuickMatkaResult(null);
-    audio.playBet();
-
-    if (matkaTimerRef.current) clearTimeout(matkaTimerRef.current);
-    matkaTimerRef.current = setTimeout(() => {
-      engine.placeBet(
-        GameType.MATKA,
-        stake,
-        (r) => {
-          const res = engine.getSattaMatkaResult(r);
-          const won = res.single === quickDigit;
-          const mult = won ? 9.5 : 0;
-          const payout = +(stake * mult).toFixed(2);
-          setQuickMatkaResult({
-            panna: res.cards,
-            digit: res.single,
-            pair: res.jodi,
-            won,
-            payout,
-          });
-          setDrawingQuickMatka(false);
-          if (won) audio.playWin();
-          else audio.playLoss();
-          return {
-            multiplier: mult,
-            outcome: `Quick Number #${quickDigit}: ${res.cards}-${res.single} (Pair ${res.jodi})`,
-          };
-        },
-        ''
-      );
-    }, 380);
   };
 
   return (
@@ -327,24 +206,17 @@ export default function Lobby() {
 
             <div className="space-y-3.5 max-w-xl relative z-10">
               <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-[#fbbf24]">
-                <span>Premier Indian Online Casino</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-[#10b981]">Instant UPI & IMPS</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-white/85 font-mono tabular-nums">
-                  Live Jackpot Pool: {formatINR(jackpotPool, 0)}
-                </span>
-              </div>
+                <span>My Casino · Virtual play</span></div>
 
               <h1
                 className="text-2xl sm:text-4xl font-extrabold font-display text-white tracking-tight leading-tight"
                 style={{ textWrap: 'balance' } as React.CSSProperties}
               >
-                Modern Casino Originals & Live Indian Classics
+                My Casino Originals & Table Games
               </h1>
 
               <p className="text-xs sm:text-sm text-[#cbd5e1] leading-relaxed">
-                Play provably fair high-multiplier originals and classic Indian table games with instant INR settlement. Fly Aviator Crash up to 10,000×, uncover 24K Gold Mines, or play Teen Patti, Andar Bahar, and Kalyan Matka.
+                Play browser-based games with virtual credits. Credits have no monetary value and cannot be transferred or redeemed.
               </p>
             </div>
 
@@ -356,29 +228,9 @@ export default function Lobby() {
               >
                 Play Aviator Crash
               </Link>
-              <Link
-                to="/teenpatti"
-                onClick={() => audio.playClick()}
-                className="px-4 sm:px-5 py-2.5 bg-[#064e3b] hover:bg-[#065f46] border border-[#10b981]/50 text-[#10b981] font-bold text-xs sm:text-sm rounded-xl whitespace-nowrap"
-              >
-                Teen Patti Poker
-              </Link>
-              <button
-                type="button"
-                onClick={handleClaimBonus}
-                className="px-3.5 sm:px-4 py-2.5 bg-[#131c31] hover:bg-[#1d2a47] border border-[#f59e0b]/40 text-[#fbbf24] font-bold text-xs sm:text-sm rounded-xl flex items-center gap-1.5 whitespace-nowrap"
-              >
-                <Gift className="w-4 h-4 text-[#f43f5e]" />
-                <span>Claim Daily Bonus</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleQuickUpiDeposit}
-                className="px-3 py-2.5 text-xs font-bold text-[#94a3b8] hover:text-white flex items-center gap-1.5 whitespace-nowrap"
-              >
-                <QrCode className="w-4 h-4 text-[#f59e0b]" />
-                <span>+₹5,000 Quick UPI</span>
-              </button>
+
+
+
             </div>
 
             {topupNotice && (
@@ -463,7 +315,7 @@ export default function Lobby() {
               <span>Featured Casino Originals</span>
             </h2>
             <span className="text-xs text-[#94a3b8]">
-              Provably Fair SHA-256 · Instant INR Cashout
+              Local virtual-credit games
             </span>
           </div>
 
@@ -512,11 +364,11 @@ export default function Lobby() {
         <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-center gap-1 p-1 bg-[#0d1322] border border-white/10 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar">
             {[
-              { id: 'ALL', label: 'All Games (14)' },
+              { id: 'ALL', label: 'All Games (9)' },
               { id: 'ORIGINALS', label: 'Originals' },
               { id: 'INDIAN', label: 'Indian Classics' },
               { id: 'TABLE', label: 'Table Games' },
-              { id: 'JACKPOT', label: 'Slots & Draws' },
+              { id: 'JACKPOT', label: 'Draw Games' },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -542,7 +394,7 @@ export default function Lobby() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search Aviator, Mines, Teen Patti..."
+              placeholder="Search games..."
               className="w-full h-10 bg-[#0d1322] border border-white/10 focus:border-[#f59e0b] rounded-xl pl-9 pr-3.5 text-xs text-white placeholder:text-[#64748b] outline-none"
             />
           </div>
@@ -587,101 +439,6 @@ export default function Lobby() {
           ))}
         </section>
 
-        {/* Live Indian Matka Markets & Instant Single-Digit Draw */}
-        <section className="bg-[#0d1322] border border-white/10 rounded-2xl p-4 sm:p-6 space-y-5 shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <h2 className="text-base sm:text-lg font-extrabold font-display text-white">
-                Live Indian Matka Markets & Instant Number Draw
-              </h2>
-              <p className="text-xs text-[#94a3b8]">
-                Official Kalyan, Worli & Milan draw results · Pick any digit (0–9) below for an instant ₹500 draw (9.5× payout)
-              </p>
-            </div>
-            <Link
-              to="/matka"
-              onClick={() => audio.playClick()}
-              className="px-4 py-2 bg-[#131c31] hover:bg-[#1d2a47] border border-[#f59e0b]/40 text-[#fbbf24] font-extrabold text-xs rounded-xl whitespace-nowrap w-fit"
-            >
-              Open Full Matka Game →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
-            {LIVE_BAZAR_MARKETS.map((mkt) => (
-              <Link
-                key={mkt.id}
-                to="/matka"
-                onClick={() => audio.playClick()}
-                className="bg-[#070b14] hover:bg-[#131c31] border border-white/10 hover:border-[#f59e0b]/50 rounded-xl p-3 text-center transition-colors"
-              >
-                <div className="text-xs font-bold text-white truncate">{mkt.name}</div>
-                <div className="text-base sm:text-lg font-extrabold font-mono text-[#fbbf24] my-1 tracking-wider tabular-nums">
-                  {mkt.openPanna}-{mkt.jodi}-{mkt.closePanna}
-                </div>
-                <div className="text-[11px] text-[#94a3b8] font-mono">
-                  {mkt.openTime} · <span className="text-[#10b981]">{mkt.status}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* Interactive 1-Tap Single Digit Draw */}
-          <div className="bg-[#070b14] border border-white/10 rounded-xl p-3.5 sm:p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="space-y-2 flex-1">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-white">
-                  Instant Single Digit Draw (0–9) · Pays 9.50× (₹500 → ₹4,750)
-                </span>
-                <span className="font-mono text-[#fbbf24]">Selected Digit: #{quickDigit}</span>
-              </div>
-              <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5">
-                {Array.from({ length: 10 }, (_, i) => i).map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => {
-                      setQuickDigit(num);
-                      audio.playClick();
-                    }}
-                    className={`h-10 rounded-lg font-mono font-extrabold text-sm border transition-colors ${
-                      quickDigit === num
-                        ? 'bg-[#f59e0b] text-[#070b14] border-white'
-                        : 'bg-[#131c31] hover:bg-[#1d2a47] text-white border-white/10'
-                    }`}
-                  >
-                    {num}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-              {quickMatkaResult && (
-                <div
-                  className={`px-3.5 py-2 rounded-xl border font-mono text-xs font-extrabold text-center ${
-                    quickMatkaResult.won
-                      ? 'bg-[#10b981]/20 border-[#10b981] text-[#10b981]'
-                      : 'bg-[#131c31] border-white/10 text-[#94a3b8]'
-                  }`}
-                >
-                  {quickMatkaResult.won
-                    ? `WIN! Drawn #${quickMatkaResult.digit} · +${formatINR(quickMatkaResult.payout, 0)}`
-                    : `Drawn Digit: #${quickMatkaResult.digit} (${quickMatkaResult.panna}-${quickMatkaResult.pair})`}
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={handleQuickMatkaPlay}
-                disabled={drawingQuickMatka}
-                className="h-11 px-5 bg-gradient-to-r from-[#f59e0b] to-[#fbbf24] hover:from-[#d97706] hover:to-[#f59e0b] text-[#070b14] font-extrabold text-xs sm:text-sm rounded-xl shadow-lg whitespace-nowrap"
-              >
-                {drawingQuickMatka ? 'Drawing...' : `Play Digit #${quickDigit} (₹500)`}
-              </button>
-            </div>
-          </div>
-        </section>
-
         {/* Platform Feature Callout Strip */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link
@@ -690,9 +447,9 @@ export default function Lobby() {
           >
             <QrCode className="w-5 h-5 text-[#f59e0b] shrink-0 mt-0.5" />
             <div>
-              <h3 className="text-sm font-bold text-white">UPI, Paytm & IMPS Cashier</h3>
+              <h3 className="text-sm font-bold text-white">Virtual credit history</h3>
               <p className="text-xs text-[#94a3b8] mt-1 leading-relaxed">
-                View all instant INR deposits, 12-digit UTR references, and personal Vault transfers.
+                View local virtual play information. No payments are available.
               </p>
             </div>
           </Link>
@@ -718,7 +475,7 @@ export default function Lobby() {
             <div>
               <h3 className="text-sm font-bold text-white">Live Statistics & RTP Analytics</h3>
               <p className="text-xs text-[#94a3b8] mt-1 leading-relaxed">
-                Track realized vs. theoretical RTP, bankroll curves, and net profit across all 14 games.
+                Track realized vs. theoretical RTP, bankroll curves, and net profit across games.
               </p>
             </div>
           </Link>

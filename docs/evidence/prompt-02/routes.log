@@ -1,0 +1,30 @@
+crash game action visible: true
+dice game action visible: true
+mines game action visible: true
+roulette game action visible: false
+blackjack game action visible: true
+baccarat game action visible: true
+plinko game action visible: true
+keno game action visible: true
+wheel game action visible: true
+slots lobby fallback: true
+teenpatti lobby fallback: true
+matka lobby fallback: true
+admin lobby fallback: true
+copy lobby payment terms: null
+copy transactions payment terms: null
+copy statistics payment terms: null
+copy fairness payment terms: null
+copy crash payment terms: null
+copy dice payment terms: null
+copy mines payment terms: null
+copy roulette payment terms: null
+copy blackjack payment terms: null
+copy baccarat payment terms: null
+copy plinko payment terms: null
+copy keno payment terms: null
+copy wheel payment terms: null
+mobile crash width [ 390, 390 ]
+mobile menu Dice visible: true
+
+Exit: 0

@@ -1,0 +1,11 @@
+Roulette initial action visible: true
+Roulette chip controls: [
+  'Reset 25,000 credits',
+  'Voisins du Zéro17 Chips (credits 1,700)',
+  'Tiers du Cylindre12 Chips (credits 1,200)',
+  'Orphelins8 Chips (credits 800)',
+  'Jeu Zéro (Zero Game)7 Chips (credits 700)',
+  'Live Stats(+credits 0)'
+]
+
+Exit: 0

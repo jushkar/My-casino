@@ -269,11 +269,11 @@ export const Mines: React.FC = () => {
         {/* Bet Amount */}
         <div>
           <div className="flex justify-between text-xs font-semibold text-slate-400 mb-1.5">
-            <span>Bet Amount (₹)</span>
-            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+            <span>Bet Amount (credits )</span>
+            <span className="font-mono text-slate-300">credits {bet.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex bg-[#151f30] rounded-xl border border-white/10 focus-within:border-amber-500/60 overflow-hidden transition-colors">
-            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">credits </div>
             <input
               type="number"
               value={bet}
@@ -306,7 +306,7 @@ export const Mines: React.FC = () => {
                 onClick={() => setBet(amt)}
                 className="py-1.5 bg-[#151f30] hover:bg-[#1e2b42] border border-white/5 rounded-lg text-[11px] font-mono font-bold text-slate-300 disabled:opacity-40 transition-colors"
               >
-                ₹{amt >= 1000 ? `${amt / 1000}k` : amt}
+                credits {amt >= 1000 ? `${amt / 1000}k` : amt}
               </button>
             ))}
           </div>
@@ -362,7 +362,7 @@ export const Mines: React.FC = () => {
                     <CheckSquare className="w-3.5 h-3.5 text-amber-400" /> {autoPattern.length} Pattern Tiles
                   </span>
                   <span className="text-emerald-400 font-mono font-bold">
-                    {autoTargetMult}× (₹{Math.floor(bet * autoTargetMult).toLocaleString('en-IN')})
+                    {autoTargetMult}× (credits {Math.floor(bet * autoTargetMult).toLocaleString('en-IN')})
                   </span>
                 </div>
                 <div className="grid grid-cols-4 gap-1.5">
@@ -403,11 +403,11 @@ export const Mines: React.FC = () => {
               <div className="flex justify-between text-xs text-slate-400 font-semibold mb-1">
                 <span>Current Payout ({currentMultiplier.toFixed(2)}×)</span>
                 <span className="text-emerald-400 font-mono font-bold">
-                  +₹{Math.max(0, currentPayout - lockedStake).toLocaleString('en-IN')}
+                  +credits {Math.max(0, currentPayout - lockedStake).toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="text-xl font-mono font-black text-white">
-                ₹{currentPayout.toLocaleString('en-IN')}
+                credits {currentPayout.toLocaleString('en-IN')}
               </div>
             </div>
 
@@ -428,14 +428,14 @@ export const Mines: React.FC = () => {
                 onClick={runAutoRound}
                 className="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_8px_25px_rgba(16,185,129,0.3)] active:scale-[0.99] text-sm flex items-center justify-center gap-2"
               >
-                <Zap className="w-4 h-4" /> Auto Reveal {autoPattern.length} Tiles (₹{bet.toLocaleString('en-IN')})
+                <Zap className="w-4 h-4" /> Auto Reveal {autoPattern.length} Tiles (credits {bet.toLocaleString('en-IN')})
               </button>
             ) : (
               <button
                 onClick={startGame}
                 className="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_8px_25px_rgba(245,158,11,0.3)] active:scale-[0.99] text-sm"
               >
-                Start Round (₹{bet.toLocaleString('en-IN')})
+                Start Round (credits {bet.toLocaleString('en-IN')})
               </button>
             )
           ) : (
@@ -446,7 +446,7 @@ export const Mines: React.FC = () => {
             >
               {revealedCount === 0
                 ? 'Select a Tile to Start'
-                : `Cash Out ₹${currentPayout.toLocaleString('en-IN')} (${currentMultiplier.toFixed(2)}×)`}
+                : `Cash Out credits ${currentPayout.toLocaleString('en-IN')} (${currentMultiplier.toFixed(2)}×)`}
             </button>
           )}
         </div>
@@ -556,7 +556,7 @@ export const Mines: React.FC = () => {
                   {currentMultiplier.toFixed(2)}×
                 </div>
                 <div className="text-lg font-mono font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-1">
-                  +₹{currentPayout.toLocaleString('en-IN')}
+                  +credits {currentPayout.toLocaleString('en-IN')}
                 </div>
               </div>
             </div>

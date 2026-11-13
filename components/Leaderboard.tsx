@@ -4,9 +4,9 @@ import { LeaderboardEntry, BetResult } from '../types';
 
 const LIVE_PLAYERS = [
   { user: 'Vikram_Mumbai', game: 'Aviator Crash', wager: 25000, mult: 4.85, won: true },
-  { user: 'Rohan_Bengaluru', game: 'Kalyan Matka', wager: 5000, mult: 95.0, won: true },
+  { user: 'Rohan_Bengaluru', game: 'Classic Dice', wager: 5000, mult: 95.0, won: true },
   { user: 'Aarav_Delhi', game: 'Gold Mines', wager: 10000, mult: 3.12, won: true },
-  { user: 'Karan_Hyderabad', game: 'Teen Patti Poker', wager: 15000, mult: 5.0, won: true },
+  { user: 'Karan_Hyderabad', game: 'Gold Mines', wager: 15000, mult: 5.0, won: true },
   { user: 'Kabir_Pune', game: 'Plinko 1000x', wager: 2000, mult: 29.0, won: true },
   { user: 'Aditya_Jaipur', game: 'Andar Bahar', wager: 8000, mult: 2.0, won: true },
   { user: 'Rohit_Indore', game: 'European Roulette', wager: 4000, mult: 36.0, won: true },
@@ -75,7 +75,7 @@ export const Leaderboard: React.FC = () => {
           </button>
         </div>
         <div className="text-xs text-[#94a3b8]">
-          SHA-256 Provably Fair · Instant INR Settlement
+          Example virtual play
         </div>
       </div>
 
@@ -88,7 +88,7 @@ export const Leaderboard: React.FC = () => {
                 <th className="px-4 py-3 font-semibold">Player</th>
                 <th className="px-4 py-3 font-semibold text-right">Bet Amount</th>
                 <th className="px-4 py-3 font-semibold text-right">Multiplier</th>
-                <th className="px-5 py-3 font-semibold text-right">Payout (INR)</th>
+                <th className="px-5 py-3 font-semibold text-right">Payout (credits)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -121,7 +121,7 @@ export const Leaderboard: React.FC = () => {
                 <th className="px-4 py-3 font-semibold">Outcome</th>
                 <th className="px-4 py-3 font-semibold text-right">Bet Amount</th>
                 <th className="px-4 py-3 font-semibold text-right">Multiplier</th>
-                <th className="px-5 py-3 font-semibold text-right">Payout (INR)</th>
+                <th className="px-5 py-3 font-semibold text-right">Payout (credits)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">

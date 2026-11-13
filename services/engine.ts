@@ -16,7 +16,6 @@ const STORAGE_KEY = 'maharaja_bookie_session_v4';
 export function formatINR(amount: number, decimals = 2): string {
   const safe = typeof amount === 'number' && isFinite(amount) ? amount : 0;
   return (
-    '₹' +
     safe.toLocaleString('en-IN', {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,

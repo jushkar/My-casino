@@ -58,11 +58,11 @@ export const Dice: React.FC = () => {
       <div className="w-full lg:w-[340px] bg-[#0b101b] p-5 flex flex-col gap-4 border-t lg:border-t-0 lg:border-r border-white/10 shrink-0">
         <div>
           <div className="flex justify-between text-xs font-semibold text-slate-400 mb-1.5">
-            <span>Bet Amount (₹)</span>
-            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+            <span>Bet Amount (credits )</span>
+            <span className="font-mono text-slate-300">credits {bet.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex bg-[#151f30] rounded-xl border border-white/10 focus-within:border-amber-500/60 overflow-hidden">
-            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">credits </div>
             <input
               type="number"
               value={bet}
@@ -91,7 +91,7 @@ export const Dice: React.FC = () => {
                 onClick={() => setBet(amt)}
                 className="py-1.5 bg-[#151f30] hover:bg-[#1e2b42] border border-white/5 rounded-lg text-[11px] font-mono font-bold text-slate-300"
               >
-                ₹{amt >= 1000 ? `${amt / 1000}k` : amt}
+                credits {amt >= 1000 ? `${amt / 1000}k` : amt}
               </button>
             ))}
           </div>
@@ -101,7 +101,7 @@ export const Dice: React.FC = () => {
         <div className="bg-[#151f30] p-3.5 rounded-xl border border-white/10">
           <div className="text-xs font-semibold text-slate-400">Profit on Win</div>
           <div className="text-lg font-mono font-black text-emerald-400 mt-0.5">
-            +₹{Math.max(0, Math.floor(bet * multiplier - bet)).toLocaleString('en-IN')}
+            +credits {Math.max(0, Math.floor(bet * multiplier - bet)).toLocaleString('en-IN')}
           </div>
         </div>
 
@@ -112,7 +112,7 @@ export const Dice: React.FC = () => {
             disabled={rolling}
             className="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_8px_25px_rgba(16,185,129,0.3)] active:scale-[0.99] text-sm"
           >
-            Roll Dice (₹{bet.toLocaleString('en-IN')})
+            Roll Dice (credits {bet.toLocaleString('en-IN')})
           </button>
         </div>
 

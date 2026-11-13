@@ -206,11 +206,11 @@ export const Plinko: React.FC = () => {
         {/* Bet Amount */}
         <div>
           <div className="flex justify-between text-xs font-semibold text-slate-400 mb-1.5">
-            <span>Bet Amount (₹)</span>
-            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+            <span>Bet Amount (credits )</span>
+            <span className="font-mono text-slate-300">credits {bet.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex bg-[#151f30] rounded-xl border border-white/10 focus-within:border-amber-500/60 overflow-hidden transition-colors">
-            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">credits </div>
             <input
               type="number"
               value={bet}
@@ -239,7 +239,7 @@ export const Plinko: React.FC = () => {
                 onClick={() => setBet(amt)}
                 className="py-1.5 bg-[#151f30] hover:bg-[#1e2b42] border border-white/5 rounded-lg text-[11px] font-mono font-bold text-slate-300 transition-colors"
               >
-                ₹{amt >= 1000 ? `${amt / 1000}k` : amt}
+                credits {amt >= 1000 ? `${amt / 1000}k` : amt}
               </button>
             ))}
           </div>
@@ -291,7 +291,7 @@ export const Plinko: React.FC = () => {
             onClick={dropBall}
             className="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-black uppercase tracking-wider rounded-xl transition-all shadow-[0_8px_25px_rgba(16,185,129,0.3)] active:scale-[0.99] text-sm"
           >
-            Drop Ball (₹{bet.toLocaleString('en-IN')})
+            Drop Ball (credits {bet.toLocaleString('en-IN')})
           </button>
           <button
             onClick={() => {

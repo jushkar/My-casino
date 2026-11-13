@@ -204,11 +204,11 @@ export const Baccarat: React.FC = () => {
         {/* Bet Amount */}
         <div>
           <div className="flex justify-between text-xs font-semibold text-slate-400 mb-1.5">
-            <span>Main Bet (₹)</span>
-            <span className="font-mono text-slate-300">₹{bet.toLocaleString('en-IN')}</span>
+            <span>Main Bet (credits )</span>
+            <span className="font-mono text-slate-300">credits {bet.toLocaleString('en-IN')}</span>
           </div>
           <div className="flex bg-[#151f30] rounded-xl border border-white/10 focus-within:border-amber-500/60 overflow-hidden">
-            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">₹</div>
+            <div className="flex items-center pl-3.5 text-amber-400 font-mono font-bold">credits </div>
             <input
               type="number"
               value={bet}
@@ -268,7 +268,7 @@ export const Baccarat: React.FC = () => {
           >
             {dealing
               ? 'Dealing Punto Banco...'
-              : `Deal ${selection} (₹${totalWager.toLocaleString('en-IN')})`}
+              : `Deal ${selection} (credits ${totalWager.toLocaleString('en-IN')})`}
           </button>
         </div>
 
@@ -358,7 +358,7 @@ export const Baccarat: React.FC = () => {
               </span>
               <span className="font-mono font-bold text-white">
                 {lastResult.payout > 0
-                  ? `Payout: ₹${lastResult.payout.toLocaleString('en-IN')}`
+                  ? `Payout: credits ${lastResult.payout.toLocaleString('en-IN')}`
                   : 'No Return'}
               </span>
             </div>
