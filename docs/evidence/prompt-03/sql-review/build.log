@@ -1,0 +1,13 @@
+
+> maharaja-club-casino@2.0.0 build
+> tsc && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 2121 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.08 kB │ gzip:   0.58 kB
+dist/assets/index-C3LiZ7oE.css   60.33 kB │ gzip:   9.97 kB
+dist/assets/index-BMhBsxkE.js   381.47 kB │ gzip: 103.45 kB
+✓ built in 4.94s

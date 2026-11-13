@@ -1,0 +1,81 @@
+ISOLATED POSTGRESQL CATALOG, SYNTHETIC AUTH. Database: mc_p3_3abfc053d6
+
+SQL: select rolname,rolcanlogin,rolinherit,rolsuper,rolbypassrls,rolcreaterole from pg_roles where rolname='mc_staff_executor' 
+mc_staff_executor|f|f|f|f|f
+
+SQL: select count(*) as executor_memberships from pg_auth_members where roleid='mc_staff_executor'::regrole or member='mc_staff_executor'::regrole 
+0
+
+SQL: select n.nspname,c.relname,pg_get_userbyid(c.relowner),c.relrowsecurity,c.relforcerowsecurity from pg_class c join pg_namespace n on n.oid=c.relnamespace where (n.nspname='mc_staff_private' and c.relkind='r') or (n.nspname='auth' and c.relname='sessions') order by 1,2 
+auth|sessions|supabase_auth_admin|t|f
+mc_staff_private|audit|postgres|t|t
+mc_staff_private|records|postgres|t|t
+mc_staff_private|roles|postgres|t|t
+mc_staff_private|sessions|postgres|t|t
+
+SQL: select schemaname,tablename,policyname,permissive,roles,cmd,qual,with_check from pg_policies where schemaname in ('auth','mc_staff_private') order by 1,2,3 
+auth|sessions|mc_staff_current_session|PERMISSIVE|{mc_staff_executor}|SELECT|((user_id = ( SELECT auth.uid() AS uid)) AND ((id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))|
+auth|sessions|mc_staff_session_scope|RESTRICTIVE|{mc_staff_executor}|SELECT|((user_id = ( SELECT auth.uid() AS uid)) AND ((id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))|
+mc_staff_private|audit|mc_audit_executor_insert|PERMISSIVE|{mc_staff_executor}|INSERT||((actor = ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1
+   FROM mc_staff_private.records r
+  WHERE ((r.id = audit.record_id) AND (r.created_by = ( SELECT auth.uid() AS uid))))))
+mc_staff_private|records|mc_records_executor_insert|PERMISSIVE|{mc_staff_executor}|INSERT||(created_by = ( SELECT auth.uid() AS uid))
+mc_staff_private|records|mc_records_executor_read|PERMISSIVE|{mc_staff_executor}|SELECT|(created_by = ( SELECT auth.uid() AS uid))|
+mc_staff_private|roles|mc_roles_executor|PERMISSIVE|{mc_staff_executor}|SELECT|(user_id = ( SELECT auth.uid() AS uid))|
+mc_staff_private|sessions|mc_sessions_executor_insert|PERMISSIVE|{mc_staff_executor}|INSERT||((user_id = ( SELECT auth.uid() AS uid)) AND ((session_id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))
+mc_staff_private|sessions|mc_sessions_executor_read|PERMISSIVE|{mc_staff_executor}|SELECT|((user_id = ( SELECT auth.uid() AS uid)) AND ((session_id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))|
+mc_staff_private|sessions|mc_sessions_executor_update|PERMISSIVE|{mc_staff_executor}|UPDATE|((user_id = ( SELECT auth.uid() AS uid)) AND ((session_id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))|((user_id = ( SELECT auth.uid() AS uid)) AND ((session_id)::text = ( SELECT (auth.jwt() ->> 'session_id'::text))))
+
+SQL: select n.nspname,p.proname,pg_get_userbyid(p.proowner),p.prosecdef,p.proconfig,p.proacl from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='mc_staff_private' or (n.nspname='public' and p.proname like 'staff_%') order by 1,2 
+mc_staff_private|gate|mc_staff_executor|t|{"search_path=\"\""}|{mc_staff_executor=X/mc_staff_executor}
+public|staff_gate|mc_staff_executor|t|{"search_path=\"\""}|{mc_staff_executor=X/mc_staff_executor,authenticated=X/mc_staff_executor}
+public|staff_record_create|mc_staff_executor|t|{"search_path=\"\""}|{mc_staff_executor=X/mc_staff_executor,authenticated=X/mc_staff_executor}
+public|staff_records_list|mc_staff_executor|t|{"search_path=\"\""}|{mc_staff_executor=X/mc_staff_executor,authenticated=X/mc_staff_executor}
+
+SQL: select a.attname,has_column_privilege('mc_staff_executor','auth.sessions',a.attname,'SELECT') from pg_attribute a where a.attrelid='auth.sessions'::regclass and a.attnum>0 and not a.attisdropped order by 1 
+created_at|t
+factor_id|f
+id|t
+not_after|t
+user_id|t
+
+SQL: select grantee,table_name,privilege_type from information_schema.role_table_grants where table_schema='mc_staff_private' order by 1,2,3 
+mc_staff_executor|audit|INSERT
+mc_staff_executor|records|INSERT
+mc_staff_executor|records|SELECT
+mc_staff_executor|roles|SELECT
+mc_staff_executor|sessions|INSERT
+mc_staff_executor|sessions|SELECT
+postgres|audit|DELETE
+postgres|audit|INSERT
+postgres|audit|REFERENCES
+postgres|audit|SELECT
+postgres|audit|TRIGGER
+postgres|audit|TRUNCATE
+postgres|audit|UPDATE
+postgres|records|DELETE
+postgres|records|INSERT
+postgres|records|REFERENCES
+postgres|records|SELECT
+postgres|records|TRIGGER
+postgres|records|TRUNCATE
+postgres|records|UPDATE
+postgres|roles|DELETE
+postgres|roles|INSERT
+postgres|roles|REFERENCES
+postgres|roles|SELECT
+postgres|roles|TRIGGER
+postgres|roles|TRUNCATE
+postgres|roles|UPDATE
+postgres|sessions|DELETE
+postgres|sessions|INSERT
+postgres|sessions|REFERENCES
+postgres|sessions|SELECT
+postgres|sessions|TRIGGER
+postgres|sessions|TRUNCATE
+postgres|sessions|UPDATE
+
+SQL: select count(*) as private_sequences from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='mc_staff_private' and c.relkind='S' 
+0
+
+PASS: catalog fixture rolled back after inspection.

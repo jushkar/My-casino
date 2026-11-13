@@ -1,3 +1,9 @@
+# Current status: SQL review correction — PARTIAL/BLOCKED
+
+The latest focused review and real isolated PostgreSQL test results are in [sql-review/README.md](sql-review/README.md). The draft idle policy, grants/RLS, migration atomicity and failure handling were corrected. **24 SQL tests passed on real PostgreSQL 17.12 with synthetic Auth**, plus recovery/conflict checks; this is not live Supabase verification. No connection to or modification of the owner project occurred during the review. The managed Auth policy/grant support boundary remains unresolved, and the migration is review-ready only, not approved or ready to apply. All earlier evidence and results below are historical and retained.
+
+---
+
 # Prompt 3 — BLOCKED, local scaffold only
 
 Base verified by `git ls-remote` and explicit fetch: `879977e43db29eea8de20b5255c0404f09f8eb19` on `origin/codex/prompt-02-demo-ui`. The checkout's default fetch refspec tracks only main. Local worktree branch: `codex/prompt-03-staff-foundation`. No deployment, provider mutation or push was performed.

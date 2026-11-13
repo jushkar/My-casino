@@ -93,3 +93,14 @@ test('isolated login is rate limited and requires same-origin CSRF', async () =>
     assert.equal((await post(app,'/api/auth/login',state,{email:'test@example.test',password:'test'})).statusCode,429);
   } finally { await app.close(); }
 });
+
+test('invalid staff input is rejected before the activity gate', async () => {
+  let gateCalls = 0;
+  const provider = (req, reply) => ({ ...fakeFactory()(req, reply), gate: async () => { gateCalls++; return 'allowed'; } });
+  const app = buildApp({ provider, origin, csrfSecret: 'this-is-a-synthetic-test-secret-only' });
+  try {
+    const state = await csrf(app, auth('staff'));
+    assert.equal((await post(app, '/api/staff/records', state, {note:'\n'})).statusCode,400);
+    assert.equal(gateCalls,0);
+  } finally { await app.close(); }
+});

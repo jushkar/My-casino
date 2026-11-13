@@ -100,9 +100,9 @@ export function buildApp({ provider = null, origin = null, csrfSecret = null } =
     return { records: await client.records() };
   });
   app.post('/api/staff/records', { preHandler: [ready, csrf], config: { rateLimit: { max: 20, timeWindow: '1 minute' } } }, async (req, reply) => {
-    const client = await staff(req, reply); if (!client) return;
     const { note } = req.body ?? {};
     if (typeof note !== 'string' || note.length < 1 || note.length > 200 || !/^[\x20-\x7e]+$/.test(note)) return fail(reply, 400, 'Invalid request');
+    const client = await staff(req, reply); if (!client) return;
     return { record: await client.createRecord(note) };
   });
   });

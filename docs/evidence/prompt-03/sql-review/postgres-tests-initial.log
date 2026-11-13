@@ -1,0 +1,27 @@
+REAL PostgreSQL; synthetic Auth schema and claims; no Supabase provider calls.
+Container: mc-p3-sql-review Database: mc_p3_41016269b3
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+test_01_first_use_auth_age_over_30_minutes (__main__.Review.test_01_first_use_auth_age_over_30_minutes) ... ok
+test_02_absolute_expiry_no_initialization (__main__.Review.test_02_absolute_expiry_no_initialization) ... ok
+test_03_activity_before_idle_extends_monotonically (__main__.Review.test_03_activity_before_idle_extends_monotonically) ... ok
+test_04_idle_expiry_never_revives (__main__.Review.test_04_idle_expiry_never_revives) ... ok
+test_05_denied_role_aal_and_invalid_input_do_not_touch (__main__.Review.test_05_denied_role_aal_and_invalid_input_do_not_touch) ... ok
+test_06_concurrent_first_and_existing_requests (__main__.Review.test_06_concurrent_first_and_existing_requests) ... ok
+test_07_refresh_same_session_does_not_reset_idle (__main__.Review.test_07_refresh_same_session_does_not_reset_idle) ... ok
+test_08_modeled_logout_deletes_auth_session (__main__.Review.test_08_modeled_logout_deletes_auth_session) ... ok
+test_09_cross_user_and_session_claims (__main__.Review.test_09_cross_user_and_session_claims) ... ok
+test_10_jwt_and_provider_not_after_expiry (__main__.Review.test_10_jwt_and_provider_not_after_expiry) ... ok
+test_11_anon_nonstaff_and_forged_metadata (__main__.Review.test_11_anon_nonstaff_and_forged_metadata) ... ok
+test_12_direct_access_and_private_helper_denied (__main__.Review.test_12_direct_access_and_private_helper_denied) ... ok
+test_13_function_owner_scope_and_immutable_permissions (__main__.Review.test_13_function_owner_scope_and_immutable_permissions) ... ok
+test_14_record_isolation_and_atomic_audit (__main__.Review.test_14_record_isolation_and_atomic_audit) ... ok
+test_15_audit_failure_rolls_back_record_and_activity (__main__.Review.test_15_audit_failure_rolls_back_record_and_activity) ... ok
+test_16_catalog_privilege_invariants (__main__.Review.test_16_catalog_privilege_invariants) ... ok
+test_17_repeat_migration_is_atomic_conflict (__main__.Review.test_17_repeat_migration_is_atomic_conflict) ... ok
+test_18_expiry_during_lock_wait (__main__.Review.test_18_expiry_during_lock_wait) ... ok
+test_19_owner_bypass_semantics_real_postgres (__main__.Review.test_19_owner_bypass_semantics_real_postgres) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 24.647s
+
+OK

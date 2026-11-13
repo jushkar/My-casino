@@ -1,0 +1,18 @@
+
+> maharaja-club-casino@2.0.0 test:server
+> node --test server/*.test.js
+
+✔ isolated staff authorization rejects anonymous, nonstaff, forged role, MFA and revoked sessions (182.568122ms)
+✔ isolated origin, CSRF binding, validation and logout (28.912207ms)
+✔ unavailable provider yields safe 503; disabled server stays closed (15.352768ms)
+✔ isolated valid-CSRF write still requires a staff session and MFA (18.349949ms)
+✔ isolated login is rate limited and requires same-origin CSRF (20.043953ms)
+✔ invalid staff input is rejected before the activity gate (32.90927ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 591.164117

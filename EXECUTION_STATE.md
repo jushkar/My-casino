@@ -1,3 +1,13 @@
+# Prompt 3 SQL security review — PARTIAL / BLOCKED
+
+- Review started from verified local/remote `eccab5a3badca6d26d3c6dc535048b66be25e289` on `codex/prompt-03-staff-foundation`. Accepted Prompt 2 lineage and all previous evidence/game sources are preserved.
+- Corrected first staff use to initialize idle time from current staff activity while preserving eight-hour Auth lifetime. Added serialized, monotonic activity; wall-time/expiry checks after lock waits; stale-snapshot denial; narrow user/session/actor RLS; role/ownership/CREATE checks; transactional conflict handling; and safe modeled logout-race denial. Invalid BFF record input now precedes the activity gate.
+- Real isolated PostgreSQL 17.12 with synthetic Auth: 24 SQL tests PASS, plus recovery/reapply and atomic conflict tests. Six fake-provider HTTP tests, frontend typecheck/build, backend JS syntax and selected secrets scans PASS. Backend JS is not typechecked. Public/game sources unchanged; browser gameplay not rerun in this scoped review.
+- No owner-project connection or provider changes during this task. Custom managed Auth policies/grants, hosted migration-runner privileges, actual Auth expiry/revocation/refresh/MFA and Supabase RLS/persistence remain BLOCKED/NOT RUN. The migration is ready for owner/security review, not ready or authorized to apply. Production startup remains disabled. No deployment, main merge or Prompt 4.
+- Evidence and security matrix: `docs/evidence/prompt-03/sql-review/README.md`; current provider proposal: `docs/evidence/prompt-03/provider-change-plan.md`. Resolve delivery commit via the commit containing this entry; exact pushed SHA is reported separately.
+
+---
+
 # Prompt 3 local implementation recovery — PARTIAL / BLOCKED
 
 - Branch `codex/prompt-03-staff-foundation` is based on accepted Prompt 2 `879977e43db29eea8de20b5255c0404f09f8eb19`. No Prompt 4 work or deployment.
