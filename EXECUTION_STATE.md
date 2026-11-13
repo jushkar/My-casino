@@ -1,13 +1,13 @@
 # My Casino Execution State
 
 - Current milestone: **1/10 only**. Prompt 2 has not started.
-- Prompt-1 gate: **PASS** for source verification, executable baseline and architecture; delivery requires the commit/push recorded below.
+- Prompt-1 gate: **PASS** for Prompt 1 source verification, executable baseline, architecture and committed/pushed delivery. This is not release acceptance.
 - Public release gate: **BLOCKED / NOT AUTHORIZED**. No deployment performed.
 - Upstream source: `https://github.com/Paidguy/casino` (read-only).
 - Pinned upstream base: `0e2c5317d0004488ec234f20c58c1fcceba3b7a0`.
 - Writable repository: `https://github.com/jushkar/My-casino` (GitHub login jushkar; push/admin verified).
 - Branch: `codex/prompt-01-baseline`; original checkout was `work`.
-- HEAD at initial state capture: `0e2c5317d0004488ec234f20c58c1fcceba3b7a0`; delivery commit reference will be recorded after the actual commit.
+- Implementation HEAD at final state capture: `51f999e7dc3e6c70a857eb9ce5f668fdba420c1f` ([GitHub commit](https://github.com/jushkar/My-casino/commit/51f999e7dc3e6c70a857eb9ce5f668fdba420c1f)), committed and pushed successfully. This state/evidence closeout is the following documentation-only commit. Resolve its exact containing SHA with `git log -1 --format=%H -- EXECUTION_STATE.md`; a file cannot embed its own commit hash. No PR created, no merge to main.
 - UTC date: 2026-11-13.
 
 ## Scope completed
@@ -43,6 +43,8 @@ No game source, app route, branding, balance logic, dependency manifest, lockfil
 | Unit/integration/browser/Crash/mobile tests | NOT RUN | No `test` script exists; browser gameplay is a Prompt-2 gate |
 | 401/403, CSRF, persistence/concurrency tests | NOT RUN | Staff backend not implemented; required in later scoped prompts |
 | Clean frozen dependency install / full advisory and transitive-license audit | NOT RUN | Existing prepared node_modules used; stale lockfile risk below |
+| Source preservation / transferred document hashes | PASS | `preservation.log`; all 45 original tracked paths unchanged |
+| Commit and push of Prompt-1 artifacts | PASS | `git-delivery.log`; actual implementation SHA recorded above |
 | Deployment | NOT RUN | Feature branch only; no main push, Actions dispatch or hosting operation |
 
 Command details, failure qualification and logs: `docs/evidence/prompt-01/README.md` and `checks.json`. Source examination is static evidence, not an application/browser/network test.
