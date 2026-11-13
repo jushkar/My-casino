@@ -7,7 +7,7 @@
 - Pinned upstream base: `0e2c5317d0004488ec234f20c58c1fcceba3b7a0`.
 - Writable repository: `https://github.com/jushkar/My-casino` (GitHub login jushkar; push/admin verified).
 - Branch: `codex/prompt-01-baseline`; original checkout was `work`.
-- Implementation HEAD at final state capture: `51f999e7dc3e6c70a857eb9ce5f668fdba420c1f` ([GitHub commit](https://github.com/jushkar/My-casino/commit/51f999e7dc3e6c70a857eb9ce5f668fdba420c1f)), committed and pushed successfully. This state/evidence closeout is the following documentation-only commit. Resolve its exact containing SHA with `git log -1 --format=%H -- EXECUTION_STATE.md`; a file cannot embed its own commit hash. No PR created, no merge to main.
+- Implementation HEAD at final state capture: `51f999e7dc3e6c70a857eb9ce5f668fdba420c1f` ([GitHub commit](https://github.com/jushkar/My-casino/commit/51f999e7dc3e6c70a857eb9ce5f668fdba420c1f)), committed and pushed successfully. State closeout commit `2d0f9c690e2e7e094a05576b145160c694af966d` was also pushed and verified; the final evidence update follows it. Resolve its exact containing SHA with `git log -1 --format=%H -- EXECUTION_STATE.md`; a file cannot embed its own commit hash. No PR created, no merge to main.
 - UTC date: 2026-11-13.
 
 ## Scope completed

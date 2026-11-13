@@ -39,3 +39,5 @@ The initial runtime probe chained `command -v bun` before `npm ls --depth=0`; it
 No `npm install`, `npm test`, lifecycle install script, payment action, wallet connection, Actions dispatch or deployment command was executed. Future steps must retain this distinction.
 
 The first staged `git diff --cached --check` returned exit 2 because three captured logs ended in an extra blank line; the commit command did not run. Log EOFs were normalized to one newline (command output content unchanged), then the staged whitespace check was rerun. This was a documentation-format check failure, not a failed app build/typecheck.
+
+Delivery and preservation: `preservation.log` verifies every original tracked path is unchanged and all copied transfer hashes match. `git-delivery.log` records actual implementation/state commit SHAs, successful feature-branch pushes and remote refs. It also records a verification-helper failure; rerun remote checks passed. The final evidence closeout is verified again after commit/push; no file claims to embed its own containing hash.
