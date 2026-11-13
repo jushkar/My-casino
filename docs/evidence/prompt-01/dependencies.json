@@ -1,0 +1,144 @@
+{
+  "manifest_scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "test_script_present": false,
+  "packages": [
+    {
+      "name": "lucide-react",
+      "group": "dependencies",
+      "requested": "^1.61.0",
+      "installed": "1.72.0",
+      "license": "ISC"
+    },
+    {
+      "name": "react",
+      "group": "dependencies",
+      "requested": "^18.2.0",
+      "installed": "18.3.1",
+      "license": "MIT"
+    },
+    {
+      "name": "react-dom",
+      "group": "dependencies",
+      "requested": "^18.2.0",
+      "installed": "18.3.1",
+      "license": "MIT"
+    },
+    {
+      "name": "react-router-dom",
+      "group": "dependencies",
+      "requested": "^6.22.0",
+      "installed": "6.30.6",
+      "license": "MIT"
+    },
+    {
+      "name": "recharts",
+      "group": "dependencies",
+      "requested": "^2.12.0",
+      "installed": "2.15.4",
+      "license": "MIT"
+    },
+    {
+      "name": "@types/react",
+      "group": "devDependencies",
+      "requested": "^18.2.55",
+      "installed": "18.3.31",
+      "license": "MIT"
+    },
+    {
+      "name": "@types/react-dom",
+      "group": "devDependencies",
+      "requested": "^18.2.19",
+      "installed": "18.3.7",
+      "license": "MIT"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "group": "devDependencies",
+      "requested": "^4.2.1",
+      "installed": "4.7.0",
+      "license": "MIT"
+    },
+    {
+      "name": "autoprefixer",
+      "group": "devDependencies",
+      "requested": "^10.4.17",
+      "installed": "10.6.2",
+      "license": "MIT"
+    },
+    {
+      "name": "postcss",
+      "group": "devDependencies",
+      "requested": "^8.4.35",
+      "installed": "8.5.32",
+      "license": "MIT"
+    },
+    {
+      "name": "tailwindcss",
+      "group": "devDependencies",
+      "requested": "^3.4.17",
+      "installed": "3.4.19",
+      "license": "MIT"
+    },
+    {
+      "name": "typescript",
+      "group": "devDependencies",
+      "requested": "^5.2.2",
+      "installed": "5.9.3",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "vite",
+      "group": "devDependencies",
+      "requested": "^5.1.0",
+      "installed": "5.4.21",
+      "license": "MIT"
+    }
+  ],
+  "installed_lifecycle_scripts": [
+    {
+      "path": "node_modules/esbuild/package.json",
+      "name": "esbuild",
+      "version": "0.21.5",
+      "scripts": {
+        "postinstall": "node install.js"
+      }
+    },
+    {
+      "path": "node_modules/postcss-selector-parser/package.json",
+      "name": "postcss-selector-parser",
+      "version": "6.1.6",
+      "scripts": {
+        "prepare": "del-cli dist && BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/"
+      }
+    },
+    {
+      "path": "node_modules/recharts/package.json",
+      "name": "recharts",
+      "version": "2.15.4",
+      "scripts": {
+        "prepare": "husky install"
+      }
+    },
+    {
+      "path": "node_modules/resolve/test/resolver/multirepo/package.json",
+      "name": "ljharb-monorepo-symlink-test",
+      "version": "0.0.0",
+      "scripts": {
+        "postinstall": "lerna bootstrap"
+      }
+    },
+    {
+      "path": "node_modules/rollup/package.json",
+      "name": "rollup",
+      "version": "4.68.3",
+      "scripts": {
+        "prepare": "husky && npm run prepare:patch && node scripts/check-release.js || npm run build:prepare"
+      }
+    }
+  ]
+}

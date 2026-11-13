@@ -1,0 +1,19 @@
+UTC: 2026-11-13T17:38:59.761429+00:00
+CWD: /workspace/My-casino
+COMMAND: npm ls --depth=0
+EXIT_CODE: 0
+
+maharaja-club-casino@2.0.0 /workspace/My-casino
+├── @types/react-dom@18.3.7
+├── @types/react@18.3.31
+├── @vitejs/plugin-react@4.7.0
+├── autoprefixer@10.6.2
+├── lucide-react@1.72.0
+├── postcss@8.5.32
+├── react-dom@18.3.1
+├── react-router-dom@6.30.6
+├── react@18.3.1
+├── recharts@2.15.4
+├── tailwindcss@3.4.19
+├── typescript@5.9.3
+└── vite@5.4.21

@@ -1,0 +1,27 @@
+{
+  "observed_utc": "2026-11-13T17:40:21.030912+00:00",
+  "source": "GitHub connector get_repo, get_user_login, get_repo_collaborator_permission (normalized observations; not raw API responses)",
+  "authenticated_login": "jushkar",
+  "project": {
+    "repository_full_name": "jushkar/My-casino",
+    "repository_id": "1456860025",
+    "default_branch": "main",
+    "permissions": {
+      "admin": true,
+      "push": true,
+      "pull": true
+    },
+    "collaborator_permission": "admin"
+  },
+  "upstream": {
+    "repository_full_name": "Paidguy/casino",
+    "repository_id": "1137422412",
+    "default_branch": "main",
+    "permissions": {
+      "admin": false,
+      "push": false,
+      "pull": true
+    }
+  },
+  "relationship": "Exact selected commit and Git tree verified; normalized connector metadata did not include fork/parent fields, so GitHub fork flag is not asserted."
+}

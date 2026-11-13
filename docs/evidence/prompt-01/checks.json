@@ -1,0 +1,90 @@
+[
+  {
+    "check": "runtime",
+    "command": [
+      "node",
+      "--version"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:38:59.677088+00:00",
+    "log": "docs/evidence/prompt-01/runtime.log"
+  },
+  {
+    "check": "npm-version",
+    "command": [
+      "npm",
+      "--version"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:38:59.681857+00:00",
+    "log": "docs/evidence/prompt-01/npm-version.log"
+  },
+  {
+    "check": "bun-availability",
+    "command": [
+      "bash",
+      "-c",
+      "command -v bun"
+    ],
+    "exit_code": 1,
+    "utc": "2026-11-13T17:38:59.759761+00:00",
+    "log": "docs/evidence/prompt-01/bun-availability.log"
+  },
+  {
+    "check": "installed-dependencies",
+    "command": [
+      "npm",
+      "ls",
+      "--depth=0"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:38:59.761429+00:00",
+    "log": "docs/evidence/prompt-01/installed-dependencies.log"
+  },
+  {
+    "check": "upstream-head",
+    "command": [
+      "git",
+      "ls-remote",
+      "https://github.com/Paidguy/casino.git",
+      "refs/heads/main"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:39:00.185482+00:00",
+    "log": "docs/evidence/prompt-01/upstream-head.log"
+  },
+  {
+    "check": "origin-head",
+    "command": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/main"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:39:02.056736+00:00",
+    "log": "docs/evidence/prompt-01/origin-head.log"
+  },
+  {
+    "check": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:39:03.186959+00:00",
+    "log": "docs/evidence/prompt-01/typecheck.log"
+  },
+  {
+    "check": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "utc": "2026-11-13T17:39:05.924817+00:00",
+    "log": "docs/evidence/prompt-01/build.log"
+  }
+]

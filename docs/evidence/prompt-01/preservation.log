@@ -1,0 +1,5 @@
+COMMAND: git diff --exit-code 0e2c5317d0004488ec234f20c58c1fcceba3b7a0 -- <all 45 original tracked paths from git ls-tree>
+EXIT_CODE: 0
+PASS: no original source, games, license, dependencies or workflow changed.
+PASS: committed transfer copy matches all 18 manifest hashes.
+Upstream push URL explicitly disabled locally via git remote set-url --push upstream DISABLED.

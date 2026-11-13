@@ -1,0 +1,18 @@
+UTC: 2026-11-13T17:39:05.924817+00:00
+CWD: /workspace/My-casino
+COMMAND: npm run build
+EXIT_CODE: 0
+
+
+> maharaja-club-casino@2.0.0 build
+> tsc && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 2128 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.49 kB │ gzip:   0.67 kB
+dist/assets/index-CMYmqKtX.css   61.24 kB │ gzip:  10.07 kB
+dist/assets/index-CzPFZyJo.js   466.65 kB │ gzip: 120.75 kB
+✓ built in 2.38s

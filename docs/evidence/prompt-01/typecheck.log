@@ -1,0 +1,8 @@
+UTC: 2026-11-13T17:39:03.186959+00:00
+CWD: /workspace/My-casino
+COMMAND: npm run typecheck
+EXIT_CODE: 0
+
+
+> maharaja-club-casino@2.0.0 typecheck
+> tsc --noEmit

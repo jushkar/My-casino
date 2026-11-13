@@ -1,0 +1,4 @@
+UTC: 2026-11-13T17:38:59.759761+00:00
+CWD: /workspace/My-casino
+COMMAND: bash -c "command -v bun"
+EXIT_CODE: 1
