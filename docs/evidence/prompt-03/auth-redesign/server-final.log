@@ -1,0 +1,69 @@
+$ npm run test:server
+
+> maharaja-club-casino@2.0.0 test:server
+> node --test server/*.test.js
+
+✔ isolated staff authorization rejects anonymous, nonstaff, forged role, MFA and revoked sessions (135.469549ms)
+✔ isolated origin, CSRF binding, validation and logout (27.954545ms)
+✔ unavailable provider yields safe 503; disabled server stays closed (17.641407ms)
+✔ isolated valid-CSRF write still requires a staff session and MFA (16.504883ms)
+✔ isolated login is rate limited and requires same-origin CSRF (19.719617ms)
+✔ invalid staff input is rejected before the activity gate (6.496943ms)
+✔ isolated SDK verifies signature, online identity, issuer, MFA and password age (59.868972ms)
+✔ bounded signed-claims policy rejects expiry and missing/future primary auth (0.732003ms)
+✔ refresh is blocked before network, including concurrently with durable logout (10.79824ms)
+✔ Auth outage fails closed; logout reports provider uncertainty after local revocation (8.674569ms)
+✔ capability is freshly random, HttpOnly/Secure, and issued only after session registration (10.357844ms)
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+✔ isolated SDK denies forged signatures, expired tokens and AAL1 capability issuance (16.092656ms)
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+✔ real SDK transport failures map to generic HTTP responses in isolated Fastify (172.859474ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1134.273068
+EXIT=0

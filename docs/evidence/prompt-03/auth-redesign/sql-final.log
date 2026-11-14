@@ -1,0 +1,35 @@
+Real PostgreSQL, no Auth schema; synthetic PostgREST claims. No live provider calls.
+Isolated container mc-p3-auth-final database redesign_d57f8164de
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+Migration SHA256 eb062d29f96b7904be56fcf5f062bfba7a4ddccd26321acf46f43f4a72e452c1
+Migration applied as non-superuser CREATEROLE mc_migrator; no Auth schema.
+test_01_no_managed_schema_or_dependencies (__main__.SQLTests.test_01_no_managed_schema_or_dependencies) ... ok
+test_02_anonymous_and_nonstaff (__main__.SQLTests.test_02_anonymous_and_nonstaff) ... ok
+test_03_no_mfa (__main__.SQLTests.test_03_no_mfa) ... ok
+test_04_authorized_open_read_write_audit (__main__.SQLTests.test_04_authorized_open_read_write_audit) ... ok
+test_05_forged_roles_sessions_capabilities (__main__.SQLTests.test_05_forged_roles_sessions_capabilities) ... ok
+test_06_expired_provider_token (__main__.SQLTests.test_06_expired_provider_token) ... ok
+test_07_primary_auth_bound_and_no_refresh_extension (__main__.SQLTests.test_07_primary_auth_bound_and_no_refresh_extension) ... ok
+test_08_logout_tombstone_before_mfa_open (__main__.SQLTests.test_08_logout_tombstone_before_mfa_open) ... ok
+test_09_logout_and_replay (__main__.SQLTests.test_09_logout_and_replay) ... ok
+test_10_external_logout_residual_is_explicit (__main__.SQLTests.test_10_external_logout_residual_is_explicit) ... ok
+test_11_concurrent_open_close_refresh_replay (__main__.SQLTests.test_11_concurrent_open_close_refresh_replay) ... ok
+test_12_persistence_across_independent_processes (__main__.SQLTests.test_12_persistence_across_independent_processes) ... ok
+test_13_cross_user_rls_and_no_direct_grants (__main__.SQLTests.test_13_cross_user_rls_and_no_direct_grants) ... ok
+test_14_audit_failure_rolls_back (__main__.SQLTests.test_14_audit_failure_rolls_back) ... ok
+test_15_catalog_privileges (__main__.SQLTests.test_15_catalog_privileges) ... ok
+test_16_fixation_cannot_replace_existing_cap (__main__.SQLTests.test_16_fixation_cannot_replace_existing_cap) ... ok
+test_17_repeat_migration_fails_atomically (__main__.SQLTests.test_17_repeat_migration_fails_atomically) ... ok
+test_18_disabled_staff_can_logout (__main__.SQLTests.test_18_disabled_staff_can_logout) ... ok
+test_19_executor_cannot_delete_or_extend_session (__main__.SQLTests.test_19_executor_cannot_delete_or_extend_session) ... ok
+test_20_no_password_auth_claim_fails_closed (__main__.SQLTests.test_20_no_password_auth_claim_fails_closed) ... ok
+test_21_rls_under_executor_and_audit_forgery (__main__.SQLTests.test_21_rls_under_executor_and_audit_forgery) ... ok
+test_22_close_races_with_write (__main__.SQLTests.test_22_close_races_with_write) ... ok
+test_23_first_use_requires_fresh_password (__main__.SQLTests.test_23_first_use_requires_fresh_password) ... ok
+test_24_recovery_transaction_can_be_rolled_back (__main__.SQLTests.test_24_recovery_transaction_can_be_rolled_back) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 16.572s
+
+OK
+Disposable recovery and clean reapply: PASS

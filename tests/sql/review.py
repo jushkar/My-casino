@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real isolated PostgreSQL tests, with synthetic Auth schema and JWT claims.
+"""Historical pre-redesign SQL tests pinned to their preserved migration snapshot.
 Prerequisite: disposable --network none postgres:17 container named below.
 No project URL, connection string, key or credentials are accepted by this runner.
 """
@@ -7,7 +7,7 @@ import concurrent.futures, hashlib, json, pathlib, subprocess, sys, time, unitte
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CONTAINER = 'mc-p3-sql-review'
 DB = 'mc_p3_' + uuid.uuid4().hex[:10]
-MIGRATION = (ROOT/'supabase/migrations/20261113231743_staff_foundation.sql').read_text()
+MIGRATION = (ROOT/'docs/evidence/prompt-03/auth-redesign/previous-migration.sql.txt').read_text()
 FIXTURE = (ROOT/'tests/sql/auth-fixture.sql').read_text()
 
 def sql(text, db=DB, ok=True):

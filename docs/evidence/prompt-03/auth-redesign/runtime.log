@@ -1,0 +1,15 @@
+$ node --version
+v24.22.1
+EXIT=0
+$ npm --version
+11.9.0
+EXIT=0
+$ python3 --version
+Python 3.12.14
+EXIT=0
+$ docker version --format {{.Server.Version}}
+29.9.2
+EXIT=0
+$ /usr/bin/chromium --version
+Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)
+EXIT=0

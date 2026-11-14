@@ -1,0 +1,16 @@
+Delivery preflight; current working changes are intentional. Starting worktree was inspected clean before editing.
+$ git branch --show-current
+codex/prompt-03-staff-foundation
+exit=0
+$ git rev-parse HEAD
+56a2796b6d349c81fbae62b717f15e0ace5813e9
+exit=0
+$ git ls-remote origin refs/heads/codex/prompt-03-staff-foundation
+56a2796b6d349c81fbae62b717f15e0ace5813e9	refs/heads/codex/prompt-03-staff-foundation
+exit=0
+$ git merge-base --is-ancestor 879977e43db29eea8de20b5255c0404f09f8eb19 HEAD
+exit=0
+$ git diff --name-only 56a2796b6d349c81fbae62b717f15e0ace5813e9 -- pages components App.tsx package.json package-lock.json .github docs/transfer/v2.0
+exit=0
+Last diff has no output: public/game sources, lockfile/dependencies, workflows and FINAL documents preserved.
+No provider-project connection, migration, settings/user changes or network retries performed.

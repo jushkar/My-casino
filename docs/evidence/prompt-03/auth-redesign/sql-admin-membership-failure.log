@@ -1,0 +1,12 @@
+Real PostgreSQL, no Auth schema; synthetic PostgREST claims. No live provider calls.
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+Migration SHA256 0c75ae2cf530e3d67ead288e50bbdee4a540dbdbc3598e4e2b0f8c788f2b7b5a
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/redesign/sql.py", line 116, in <module>
+    sql('set role mc_migrator; '+M)
+  File "/workspace/My-casino-prompt03/tests/redesign/sql.py", line 9, in sql
+    if ok and p.returncode: raise AssertionError(p.stderr)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  unsafe executor privilege boundary
+CONTEXT:  PL/pgSQL function inline_code_block line 9 at RAISE
+

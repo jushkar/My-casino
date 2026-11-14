@@ -1,0 +1,14 @@
+Actual local commands/results for this redesign:
+git fetch origin refs/heads/codex/prompt-03-staff-foundation: exit 0; FETCH_HEAD remained expected 56a2796b6d349c81fbae62b717f15e0ace5813e9.
+npm ci --ignore-scripts --no-audit --no-fund: exit 0.
+npm run test:server: exit 0, 13 tests passed (fake-provider / installed SDK transport isolation).
+npm run typecheck: exit 0.
+npm run build: exit 0, synthetic server-only canary supplied through environment.
+node --check server/*.js: each file exit 0; see syntax.log (per-file invocation, not shell wildcard passed to node).
+python3 tests/redesign/startup.py: exit 0.
+TEST_PG_CONTAINER=mc-p3-auth-final python3 tests/redesign/sql.py: exit 0; 24 real PostgreSQL tests and disposable recovery/reapply passed; synthetic JWT claims only.
+Read-only tests/redesign/catalog.sql via docker exec psql: exit 0 on final recreated isolated database; see catalog.log.
+CASINO_URL=http://127.0.0.1:4173 node docs/evidence/prompt-03/auth-redesign/gameplay.cjs: nine game PASS records plus Crash auto cashout 1.01, no failed game record. Original exec completion handle was unavailable after the usage-limit pause; final exit code not separately captured. Assertions and screenshots are preserved. Optional Google Fonts network errors remain recorded.
+python3 tests/redesign/scan.py: exit 0, selected patterns only.
+git diff --check: exit 0 before staging.
+No commands targeted the owner's Supabase project. No deployment commands or workflow dispatch.

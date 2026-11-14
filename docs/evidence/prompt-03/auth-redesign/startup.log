@@ -1,0 +1,2 @@
+PASS NODE_ENV=production refuses startup, nonzero exit.
+PASS development entrypoint remains 503 even with syntactically complete synthetic configuration.

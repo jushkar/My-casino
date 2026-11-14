@@ -1,0 +1,3 @@
+Read-only catalog attempt after usage-limit pause: NOT RUN.
+Docker reported the disposable mc-p3-auth-final container was not running.
+Its data directory is tmpfs, so a restart requires a fresh migration and complete SQL test run. No provider database was involved.

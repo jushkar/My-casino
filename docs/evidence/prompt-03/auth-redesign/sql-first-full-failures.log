@@ -1,0 +1,51 @@
+Real PostgreSQL, no Auth schema; synthetic PostgREST claims. No live provider calls.
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+Migration SHA256 eb062d29f96b7904be56fcf5f062bfba7a4ddccd26321acf46f43f4a72e452c1
+Migration applied as non-superuser CREATEROLE mc_migrator; no Auth schema.
+test_01_no_managed_schema_or_dependencies (__main__.SQLTests.test_01_no_managed_schema_or_dependencies) ... ok
+test_02_anonymous_and_nonstaff (__main__.SQLTests.test_02_anonymous_and_nonstaff) ... ok
+test_03_no_mfa (__main__.SQLTests.test_03_no_mfa) ... ok
+test_04_authorized_open_read_write_audit (__main__.SQLTests.test_04_authorized_open_read_write_audit) ... ERROR
+test_05_forged_roles_sessions_capabilities (__main__.SQLTests.test_05_forged_roles_sessions_capabilities) ... ok
+test_06_expired_provider_token (__main__.SQLTests.test_06_expired_provider_token) ... ok
+test_07_primary_auth_bound_and_no_refresh_extension (__main__.SQLTests.test_07_primary_auth_bound_and_no_refresh_extension) ... FAIL
+test_08_logout_tombstone_before_mfa_open (__main__.SQLTests.test_08_logout_tombstone_before_mfa_open) ... ok
+test_09_logout_and_replay (__main__.SQLTests.test_09_logout_and_replay) ... ok
+test_10_external_logout_residual_is_explicit (__main__.SQLTests.test_10_external_logout_residual_is_explicit) ... ok
+test_11_concurrent_open_close_refresh_replay (__main__.SQLTests.test_11_concurrent_open_close_refresh_replay) ... ok
+test_12_persistence_across_independent_processes (__main__.SQLTests.test_12_persistence_across_independent_processes) ... ok
+test_13_cross_user_rls_and_no_direct_grants (__main__.SQLTests.test_13_cross_user_rls_and_no_direct_grants) ... ok
+test_14_audit_failure_rolls_back (__main__.SQLTests.test_14_audit_failure_rolls_back) ... ok
+test_15_catalog_privileges (__main__.SQLTests.test_15_catalog_privileges) ... ok
+test_16_fixation_cannot_replace_existing_cap (__main__.SQLTests.test_16_fixation_cannot_replace_existing_cap) ... ok
+test_17_repeat_migration_fails_atomically (__main__.SQLTests.test_17_repeat_migration_fails_atomically) ... ok
+test_18_disabled_staff_can_logout (__main__.SQLTests.test_18_disabled_staff_can_logout) ... ok
+test_19_executor_cannot_delete_or_extend_session (__main__.SQLTests.test_19_executor_cannot_delete_or_extend_session) ... ok
+test_20_no_password_auth_claim_fails_closed (__main__.SQLTests.test_20_no_password_auth_claim_fails_closed) ... ok
+
+======================================================================
+ERROR: test_04_authorized_open_read_write_audit (__main__.SQLTests.test_04_authorized_open_read_write_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/redesign/sql.py", line 37, in test_04_authorized_open_read_write_audit
+    self.assertEqual(self.call('staff_records_list',quote(self.cap)).split('|')[1],'demo')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_07_primary_auth_bound_and_no_refresh_extension (__main__.SQLTests.test_07_primary_auth_bound_and_no_refresh_extension)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/redesign/sql.py", line 50, in test_07_primary_auth_bound_and_no_refresh_extension
+    sql(f"update mc_staff_private.sessions set auth_time=clock_timestamp()-interval '6 minutes',expires_at=clock_timestamp()-interval '1 minute' where session_id='{self.s}'")
+  File "/workspace/My-casino-prompt03/tests/redesign/sql.py", line 9, in sql
+    if ok and p.returncode: raise AssertionError(p.stderr)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  new row for relation "sessions" violates check constraint "sessions_check"
+DETAIL:  Failing row contains (6d3b15ff-4b91-4d5f-9a93-fea9be33e487, 3de83958-f958-4ed6-8385-de90ed478817, ffe054fe7ae0cb6dc65c3af9b61d5209f439851db43d0ba5997337df154668eb, 2026-11-13 23:58:54.487182+00, 2026-11-14 00:03:54.487183+00, null, 2026-11-14 00:04:54.189552+00).
+
+
+----------------------------------------------------------------------
+Ran 20 tests in 18.184s
+
+FAILED (failures=1, errors=1)

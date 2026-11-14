@@ -1,0 +1,7 @@
+node --check server/app.js: exit 0
+node --check server/app.test.js: exit 0
+node --check server/index.js: exit 0
+node --check server/login.js: exit 0
+node --check server/provider.js: exit 0
+node --check server/provider.test.js: exit 0
+node --check server/staff.js: exit 0

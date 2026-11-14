@@ -1,3 +1,14 @@
+# Prompt 3 Auth architecture redesign — PARTIAL / BLOCKED
+
+- Started from verified clean local/remote feature HEAD `56a2796b6d349c81fbae62b717f15e0ace5813e9` on `codex/prompt-03-staff-foundation`; accepted Prompt 2 lineage, all public games and earlier evidence preserved.
+- Unapplied SQL draft now contains only application-owned objects: authoritative staff roles, durable capability/session expiry/revocation, author-private records and atomic audit. No managed Auth table policies, grants, runtime SELECTs or foreign keys. Fastify uses per-request getUser plus verified claims/AAL2, app session RPCs, no refresh grant transport, and local close before best-effort provider logout.
+- [ADR-002](docs/decisions/ADR-002-staff-session-boundary.md) is PROPOSED, not accepted. Five-minute non-renewable password-authentication window replaces the previous idle/absolute policy; bounded external-provider revocation and direct-RPC Auth-outage residual require explicit owner approval. getUser alone is not claimed to prove immediate arbitrary session revocation. Production and normal development staff activation remain disabled pending approval and live validation.
+- Real isolated PostgreSQL 17.12: 24 SQL cases plus transactional recovery and clean reapply PASS; migration applied as a non-superuser CREATEROLE role without an Auth schema. Actual catalog/RLS/locks/data durability were tested with synthetic PostgREST claims. This is not Supabase Auth/PostgREST integration. 13 fake-provider/real-SDK HTTP tests, clean npm ci, frontend typecheck/build, backend JS syntax, startup guards, selected secret scans and nine-game browser smoke/Crash auto cashout PASS. Optional Google Fonts still fails through the proxy; failed SQL/SDK attempts are retained.
+- No owner-project connection, migration, Auth setting change or identity creation in this task; no network diagnostic retry. Runtime connectivity, owner policy acceptance, real identities/MFA, signed AMR behavior, hosted privilege/RLS checks, provider logout/disable/refresh and end-to-end persistence remain BLOCKED/NOT RUN. No deployment, main merge or Prompt 4 work.
+- Evidence/security matrix and exact changed paths: [auth-redesign/README.md](docs/evidence/prompt-03/auth-redesign/README.md). Exact app-only proposal/recovery/live-test plan: [provider-change-plan.md](docs/evidence/prompt-03/provider-change-plan.md). Review-ready only; not authorized/ready to apply. Resolve this delivery via the commit containing this entry; exact pushed SHA is reported separately.
+
+---
+
 # Prompt 3 SQL security review — PARTIAL / BLOCKED
 
 - Review started from verified local/remote `eccab5a3badca6d26d3c6dc535048b66be25e289` on `codex/prompt-03-staff-foundation`. Accepted Prompt 2 lineage and all previous evidence/game sources are preserved.

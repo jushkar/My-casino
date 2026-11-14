@@ -17,6 +17,8 @@ export function buildApp({ provider = null, origin = null, csrfSecret = null } =
     return payload;
   });
   app.setErrorHandler((error, _req, reply) => {
+    if (error.statusCode === 403) return fail(reply, 403, 'Access denied');
+    if (error.statusCode === 401) return fail(reply, 401, 'Authentication required');
     if (error.statusCode === 429) return fail(reply, 429, 'Too many requests');
     if (error.statusCode === 400 || error.statusCode === 413 || error.statusCode === 415) return fail(reply, error.statusCode, 'Invalid request');
     return fail(reply, 503, 'Staff service unavailable');
@@ -24,7 +26,7 @@ export function buildApp({ provider = null, origin = null, csrfSecret = null } =
   app.after(() => {
   const ready = async (_req, reply) => { if (!provider || !origin || !csrfSecret) return fail(reply, 503, 'Staff service unavailable'); };
   const token = (req) => {
-    const auth = Object.entries(req.cookies).filter(([key]) => key === '__Host-mc-auth' || key.startsWith('__Host-mc-auth.')).sort(([a], [b]) => a.localeCompare(b));
+    const auth = Object.entries(req.cookies).filter(([key]) => key === '__Host-mc-staff' || key === '__Host-mc-auth' || key.startsWith('__Host-mc-auth.')).sort(([a], [b]) => a.localeCompare(b));
     return createHmac('sha256', csrfSecret).update(JSON.stringify([req.cookies[cookieName], auth])).digest('hex');
   };
   const csrf = (req, reply, done) => {
@@ -87,13 +89,11 @@ export function buildApp({ provider = null, origin = null, csrfSecret = null } =
     const client = await identity(req, reply); if (!client) return;
     const { factorId, code } = req.body ?? {};
     if (typeof factorId !== 'string' || !/^[0-9a-f-]{36}$/i.test(factorId) || typeof code !== 'string' || !/^\d{6}$/.test(code)) return fail(reply, 400, 'Invalid request');
-    try { await client.verify(factorId, code); } catch (e) { if (e.status === 400 || e.status === 401 || e.status === 403) return fail(reply, 403, 'Verification failed'); throw e; }
+    try { await client.verify(factorId, code); await client.open(); } catch (e) { if (e.status === 400 || e.status === 401 || e.status === 403) return fail(reply, 403, 'Verification failed'); throw e; }
     return { ok: true };
   });
   app.post('/api/auth/logout', { preHandler: [ready, csrf] }, async (req, reply) => {
-    const client = await identity(req, reply); if (!client) return;
-    await client.logout();
-    return { ok: true };
+    return { ok: true, ...await provider(req, reply).logout() };
   });
   app.get('/api/staff/records', { preHandler: ready }, async (req, reply) => {
     const client = await staff(req, reply); if (!client) return;

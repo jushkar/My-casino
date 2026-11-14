@@ -1,3 +1,11 @@
+# Current status: Auth redesign — PARTIAL/BLOCKED
+
+The current proposal and evidence are in [auth-redesign/README.md](auth-redesign/README.md) and [ADR-002](../../decisions/ADR-002-staff-session-boundary.md). The unapplied migration now uses only application-owned objects; all managed auth.sessions policies/grants and runtime managed-table access have been removed. Real isolated PostgreSQL 17.12 tests passed (24 cases plus recovery/reapply), as did 13 isolated SDK/HTTP tests, clean install, frontend typecheck/build, backend syntax, selected scans and nine-game gameplay smoke checks. These are not live Supabase results.
+
+The proposed five-minute non-renewable primary-authentication window deliberately permits a bounded residual after external provider revocation. Direct bearer RPCs do not run the BFF's online getUser check. These tradeoffs require explicit owner acceptance and real validation; immediate arbitrary external revocation is not established. Both production and normal development staff activation stay disabled. No owner-project connection or mutation, deployment or Prompt 4 occurred. All sections below are historical evidence, preserved unchanged.
+
+---
+
 # Current status: SQL review correction — PARTIAL/BLOCKED
 
 The latest focused review and real isolated PostgreSQL test results are in [sql-review/README.md](sql-review/README.md). The draft idle policy, grants/RLS, migration atomicity and failure handling were corrected. **24 SQL tests passed on real PostgreSQL 17.12 with synthetic Auth**, plus recovery/conflict checks; this is not live Supabase verification. No connection to or modification of the owner project occurred during the review. The managed Auth policy/grant support boundary remains unresolved, and the migration is review-ready only, not approved or ready to apply. All earlier evidence and results below are historical and retained.

@@ -1,0 +1,55 @@
+✔ isolated staff authorization rejects anonymous, nonstaff, forged role, MFA and revoked sessions (179.702902ms)
+✔ isolated origin, CSRF binding, validation and logout (20.680277ms)
+✔ unavailable provider yields safe 503; disabled server stays closed (19.473252ms)
+✔ isolated valid-CSRF write still requires a staff session and MFA (24.025748ms)
+✔ isolated login is rate limited and requires same-origin CSRF (16.351048ms)
+✔ invalid staff input is rejected before the activity gate (4.802899ms)
+✔ isolated SDK verifies signature, online identity, issuer, MFA and password age (83.569824ms)
+✔ bounded signed-claims policy rejects expiry and missing/future primary auth (0.414478ms)
+✔ refresh is blocked before network, including concurrently with durable logout (8.271214ms)
+✔ Auth outage fails closed; logout reports provider uncertainty after local revocation (8.159088ms)
+✔ capability is freshly random, HttpOnly/Secure, and issued only after session registration (6.836339ms)
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+AuthApiError: Reauthentication required
+    at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+    at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+    at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+    at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+  __isAuthError: true,
+  status: 401,
+  code: undefined
+}
+✖ isolated SDK denies forged signatures, expired tokens and AAL1 capability issuance (9.018226ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 934.867353
+
+✖ failing tests:
+
+test at server/provider.test.js:60:1
+✖ isolated SDK denies forged signatures, expired tokens and AAL1 capability issuance (9.018226ms)
+  Error [AuthApiError]: Reauthentication required
+      at handleError (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:88:11)
+      at async _handleRequest (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:133:9)
+      at async _request (/workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/fetch.js:113:18)
+      at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:4098:24
+      at async /workspace/My-casino-prompt03/node_modules/@supabase/auth-js/dist/main/lib/helpers.js:220:36 {
+    __isAuthError: true,
+    status: 401,
+    code: undefined
+  }
