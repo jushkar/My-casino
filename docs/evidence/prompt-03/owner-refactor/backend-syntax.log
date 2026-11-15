@@ -1,0 +1,10 @@
+server/app.js: EXIT=0
+server/app.test.js: EXIT=0
+server/database.js: EXIT=0
+server/index.js: EXIT=0
+server/login.js: EXIT=0
+server/owner-service.js: EXIT=0
+server/owner.js: EXIT=0
+server/provider.js: EXIT=0
+server/provider.test.js: EXIT=0
+server/token-box.js: EXIT=0

@@ -1,0 +1,7 @@
+PASS real node-postgres connection, verified local TLS certificate and mc_owner_gateway session_user. Fixture host auth is local trust; production SCRAM/provider credentials NOT tested.
+PASS untrusted TLS certificate rejected; no rejectUnauthorized:false option.
+PASS real gateway transactions, rollback, encrypted fixture persistence, row lock and permit issuance.
+PASS gateway cannot read private authority/data, assume user/executor/operator roles, or execute owner RPC directly.
+PASS simulated PostgREST role consumed permit; real gateway logout persists and rejects reuse. No real Supabase Auth or Data API verification.
+
+EXIT_CODE=0

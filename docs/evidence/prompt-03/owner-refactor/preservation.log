@@ -1,0 +1,6 @@
+$ git diff --exit-code b2d0bb9c6f5bd242f13bf06d507499f318a201f0 -- App.tsx pages components services public index.html vite.config.ts .github docs/transfer docs/evidence/prompt-01 docs/evidence/prompt-02 ARCHITECTURE_DECISION.md docs/decisions/ADR-002-staff-session-boundary.md LICENSE
+EXIT_CODE=0
+PASS accepted public frontend, games, /#/admin routing, FINAL documents, workflows, Prompt 1/2 evidence and earlier architecture sources unchanged.
+PASS prior SQL-review and Auth-redesign evidence unchanged. Historical ADR-002 SQL harness now reads its archived migration snapshot.
+PASS eight previous implementation/migration/plan snapshots match starting commit byte-for-byte.
+PASS accepted Prompt 2 SHA is an ancestor.

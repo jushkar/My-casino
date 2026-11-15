@@ -3,10 +3,10 @@ import cookie from '@fastify/cookie';
 import rateLimit from '@fastify/rate-limit';
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import { ownerCookie } from './owner-service.js';
 
-const cookieName = '__Host-mc-csrf';
-const fail = (reply, status, error) => reply.code(status).send({ error });
-
+const csrfCookie = '__Host-mc-owner-csrf';
+const fail = (reply, status, error, code) => reply.code(status).send({ error, ...(code ? { code } : {}) });
 export function buildApp({ provider = null, origin = null, csrfSecret = null } = {}) {
   const app = Fastify({ logger: false, bodyLimit: 4096, trustProxy: false });
   app.register(cookie);
@@ -17,94 +17,62 @@ export function buildApp({ provider = null, origin = null, csrfSecret = null } =
     return payload;
   });
   app.setErrorHandler((error, _req, reply) => {
-    if (error.statusCode === 403) return fail(reply, 403, 'Access denied');
-    if (error.statusCode === 401) return fail(reply, 401, 'Authentication required');
+    if (error.code === 'P0004') return fail(reply, 403, 'Verify a fresh authenticator code before saving.', 'STEP_UP_REQUIRED');
+    if (error.statusCode === 401 || ['28000','28P01','23505'].includes(error.code)) return fail(reply, 401, 'Owner sign-in required, or session expired or revoked.', 'SIGN_IN_REQUIRED');
+    if (error.statusCode === 403 || error.code === '42501') return fail(reply, 403, 'Access denied');
     if (error.statusCode === 429) return fail(reply, 429, 'Too many requests');
-    if (error.statusCode === 400 || error.statusCode === 413 || error.statusCode === 415) return fail(reply, error.statusCode, 'Invalid request');
-    return fail(reply, 503, 'Staff service unavailable');
+    if ([400,413,415].includes(error.statusCode) || error.code === '22023') return fail(reply, error.statusCode ?? 400, 'Invalid request');
+    return fail(reply, 503, 'Owner service unavailable');
   });
   app.after(() => {
-  const ready = async (_req, reply) => { if (!provider || !origin || !csrfSecret) return fail(reply, 503, 'Staff service unavailable'); };
-  const token = (req) => {
-    const auth = Object.entries(req.cookies).filter(([key]) => key === '__Host-mc-staff' || key === '__Host-mc-auth' || key.startsWith('__Host-mc-auth.')).sort(([a], [b]) => a.localeCompare(b));
-    return createHmac('sha256', csrfSecret).update(JSON.stringify([req.cookies[cookieName], auth])).digest('hex');
-  };
-  const csrf = (req, reply, done) => {
-    const header = req.headers['x-csrf-token'];
-    if (req.headers.origin !== origin || req.headers['content-type']?.split(';')[0].trim().toLowerCase() !== 'application/json' || !req.cookies[cookieName] || typeof header !== 'string' || !/^[a-f0-9]{64}$/.test(header)) {
-      fail(reply, 403, 'Request rejected'); return;
+    const ready = async (_req, reply) => { if (!provider || !origin || !csrfSecret) return fail(reply, 503, 'Owner service unavailable'); };
+    const token = req => createHmac('sha256', csrfSecret).update(JSON.stringify([req.cookies[csrfCookie], req.cookies[ownerCookie] ?? ''])).digest('hex');
+    const csrf = (req, reply, done) => {
+      const value = req.headers['x-csrf-token'];
+      if (req.headers.origin !== origin || req.headers['content-type']?.split(';')[0].trim().toLowerCase() !== 'application/json'
+        || !req.cookies[csrfCookie] || typeof value !== 'string' || !/^[a-f0-9]{64}$/.test(value)
+        || !timingSafeEqual(Buffer.from(value, 'hex'), Buffer.from(token(req), 'hex'))) {
+        fail(reply, 403, 'Request rejected'); return;
+      }
+      done();
+    };
+    const load = name => readFile(new URL(name, import.meta.url), 'utf8');
+    app.get('/owner/login', { preHandler: ready }, async (_req, reply) => reply.type('text/html').send(await load('login.html')));
+    app.get('/owner/login.js', { preHandler: ready }, async (_req, reply) => reply.type('application/javascript').send(await load('login.js')));
+    for (const [path, file, type] of [['/owner','owner.html','text/html'],['/owner/panel.js','owner.js','application/javascript']]) {
+      app.get(path, { preHandler: ready }, async (req, reply) => {
+        await provider(req, reply).run('status');
+        return reply.type(type).send(await load(file));
+      });
     }
-    const actual = Buffer.from(header, 'hex'), expected = Buffer.from(token(req), 'hex');
-    if (!timingSafeEqual(actual, expected)) { fail(reply, 403, 'Request rejected'); return; }
-    done();
-  };
-  const identity = async (req, reply) => {
-    const client = provider(req, reply);
-    const user = await client.user();
-    if (!user) { fail(reply, 401, 'Authentication required'); return null; }
-    return client;
-  };
-  const staff = async (req, reply) => {
-    const client = await identity(req, reply);
-    if (!client) return null;
-    if (await client.assurance() !== 'aal2') { fail(reply, 403, 'Access denied'); return null; }
-    const gate = await client.gate();
-    if (gate === 'unauthenticated') { fail(reply, 401, 'Authentication required'); return null; }
-    if (gate !== 'allowed') { fail(reply, 403, 'Access denied'); return null; }
-    return client;
-  };
-  const load = async name => readFile(new URL(`./${name}`, import.meta.url), 'utf8');
-  app.get('/staff/login', { preHandler: ready }, async (_req, reply) => reply.type('text/html').send(await load('login.html')));
-  app.get('/staff/login.js', { preHandler: ready }, async (_req, reply) => reply.type('application/javascript').send(await load('login.js')));
-  app.get('/staff/staff.js', { preHandler: ready }, async (req, reply) => {
-    if (!await staff(req, reply)) return;
-    return reply.type('application/javascript').send(await load('staff.js'));
-  });
-  app.get('/staff', { preHandler: ready }, async (req, reply) => {
-    if (!await staff(req, reply)) return;
-    return reply.type('text/html').send(await load('staff.html'));
-  });
-  app.get('/api/auth/csrf', { preHandler: ready }, async (req, reply) => {
-    if (!req.cookies[cookieName] || !/^[a-f0-9]{64}$/.test(req.cookies[cookieName])) {
-      req.cookies[cookieName] = randomBytes(32).toString('hex');
-      reply.setCookie(cookieName, req.cookies[cookieName], { secure: true, httpOnly: true, sameSite: 'strict', path: '/' });
-    }
-    return { token: token(req) };
-  });
-  const sensitive = { preHandler: [ready, csrf], config: { rateLimit: { max: 5, timeWindow: '1 minute' } } };
-  app.post('/api/auth/login', sensitive, async (req, reply) => {
-    const { email, password } = req.body ?? {};
-    if (typeof email !== 'string' || email.length > 254 || typeof password !== 'string' || password.length > 1024 || !email || !password) return fail(reply, 400, 'Invalid request');
-    try { await provider(req, reply).login(email, password); } catch (e) {
-      if (e.status === 400 || e.status === 401) return fail(reply, 401, 'Authentication failed');
-      throw e;
-    }
-    return { ok: true };
-  });
-  app.get('/api/auth/factors', { preHandler: ready }, async (req, reply) => {
-    const client = await identity(req, reply); if (!client) return;
-    return { factors: await client.factors() };
-  });
-  app.post('/api/auth/mfa', sensitive, async (req, reply) => {
-    const client = await identity(req, reply); if (!client) return;
-    const { factorId, code } = req.body ?? {};
-    if (typeof factorId !== 'string' || !/^[0-9a-f-]{36}$/i.test(factorId) || typeof code !== 'string' || !/^\d{6}$/.test(code)) return fail(reply, 400, 'Invalid request');
-    try { await client.verify(factorId, code); await client.open(); } catch (e) { if (e.status === 400 || e.status === 401 || e.status === 403) return fail(reply, 403, 'Verification failed'); throw e; }
-    return { ok: true };
-  });
-  app.post('/api/auth/logout', { preHandler: [ready, csrf] }, async (req, reply) => {
-    return { ok: true, ...await provider(req, reply).logout() };
-  });
-  app.get('/api/staff/records', { preHandler: ready }, async (req, reply) => {
-    const client = await staff(req, reply); if (!client) return;
-    return { records: await client.records() };
-  });
-  app.post('/api/staff/records', { preHandler: [ready, csrf], config: { rateLimit: { max: 20, timeWindow: '1 minute' } } }, async (req, reply) => {
-    const { note } = req.body ?? {};
-    if (typeof note !== 'string' || note.length < 1 || note.length > 200 || !/^[\x20-\x7e]+$/.test(note)) return fail(reply, 400, 'Invalid request');
-    const client = await staff(req, reply); if (!client) return;
-    return { record: await client.createRecord(note) };
-  });
+    app.get('/api/owner/auth/csrf', { preHandler: ready }, async (req, reply) => {
+      if (!/^[a-f0-9]{64}$/.test(req.cookies[csrfCookie] ?? '')) {
+        req.cookies[csrfCookie] = randomBytes(32).toString('hex');
+        reply.setCookie(csrfCookie, req.cookies[csrfCookie], { secure: true, httpOnly: true, sameSite: 'strict', path: '/' });
+      }
+      return { token: token(req) };
+    });
+    const sensitive = { preHandler: [ready, csrf], config: { rateLimit: { max: 5, timeWindow: '1 minute' } } };
+    app.post('/api/owner/auth/login', sensitive, async (req, reply) => {
+      const { email, password } = req.body ?? {};
+      if (typeof email !== 'string' || !email || email.length > 254 || typeof password !== 'string' || !password || password.length > 1024) return fail(reply, 400, 'Invalid request');
+      await provider(req, reply).login(email, password);
+      return { ok: true };
+    });
+    app.get('/api/owner/auth/factors', { preHandler: ready }, (req, reply) => provider(req, reply).factors());
+    app.post('/api/owner/auth/mfa', sensitive, async (req, reply) => {
+      const { factorId, code } = req.body ?? {};
+      if (typeof factorId !== 'string' || !/^[0-9a-f-]{36}$/.test(factorId) || typeof code !== 'string' || !/^\d{6}$/.test(code)) return fail(reply, 400, 'Invalid request');
+      return provider(req, reply).mfa(factorId, code);
+    });
+    app.post('/api/owner/auth/logout', { preHandler: [ready, csrf] }, async (req, reply) => ({ ok: true, ...await provider(req, reply).logout() }));
+    app.get('/api/owner/session', { preHandler: ready }, (req, reply) => provider(req, reply).run('status'));
+    app.get('/api/owner/records', { preHandler: ready }, (req, reply) => provider(req, reply).run('records.read'));
+    app.post('/api/owner/records', { preHandler: [ready, csrf], config: { rateLimit: { max: 20, timeWindow: '1 minute' } } }, (req, reply) => {
+      const { note } = req.body ?? {};
+      if (typeof note !== 'string' || note.length < 1 || note.length > 200 || !/^[\x20-\x7e]+$/.test(note)) return fail(reply, 400, 'Invalid request');
+      return provider(req, reply).run('record.create', note);
+    });
   });
   return app;
 }

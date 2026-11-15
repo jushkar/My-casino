@@ -1,0 +1,11 @@
+Real isolated PostgreSQL; synthetic gateway/PostgREST principals and claims. No Auth service, provider network or real identities.
+Container mc-p3-owner database owner_5fdc39efa4
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 188, in <module>
+    print('Container',C,'database',DB,flush=True);print(sql('select version()',db='postgres'),flush=True)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Error response from daemon: No such container: mc-p3-owner
+

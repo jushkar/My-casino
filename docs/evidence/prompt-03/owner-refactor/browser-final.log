@@ -1,0 +1,5 @@
+$ node tests/owner/browser.mjs
+PASS isolated browser owner entry, HttpOnly/Secure localhost cookie, expiry draft preservation without browser storage, MFA step-up/manual retry, outage and logout. Provider service is FAKE. HTTPS/Safari not tested.
+PASS /owner returns 503 when normal service configuration is disabled.
+PASS accepted /#/admin fallback matches the public lobby. Legacy House Controls source remains unrouted/unchanged; this routing was explicitly confirmed by the owner. /owner is separate.
+EXIT=0

@@ -1,0 +1,14 @@
+✔ isolated owner routes enforce anonymous 401, nonowner/AAL1/disabled 403 and owner access (219.019775ms)
+✔ isolated exact Origin, CSRF binding, content type and CORS denial (32.318176ms)
+✔ isolated writes retain identity/MFA checks with valid CSRF; malformed notes never reach service (14.460409ms)
+✔ isolated logout revokes old app cookie and distinguishes provider uncertainty (10.932381ms)
+✔ isolated Auth/DB outage and disabled startup return safe 503 (16.195741ms)
+✔ isolated rate limiting, no owner enrollment/reassignment routes (15.062522ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 749.277401

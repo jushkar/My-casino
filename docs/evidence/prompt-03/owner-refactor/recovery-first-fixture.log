@@ -1,0 +1,23 @@
+DROP FUNCTION
+NOTICE:  drop cascades to 17 other objects
+DETAIL:  drop cascades to table mc_owner_private.binding
+drop cascades to table mc_owner_private.sessions
+drop cascades to table mc_owner_private.permits
+drop cascades to table mc_owner_private.records
+drop cascades to table mc_owner_private.audit
+drop cascades to function mc_owner_private.hash(text)
+drop cascades to function mc_owner_private.shape(jsonb)
+drop cascades to function mc_owner_private.bind_lock(boolean)
+drop cascades to function mc_owner_private.session_lock(text,boolean)
+drop cascades to function mc_owner_private.gateway_begin(uuid,text,jsonb,text)
+drop cascades to function mc_owner_private.gateway_lock(text)
+drop cascades to function mc_owner_private.gateway_save(text,jsonb,text)
+drop cascades to function mc_owner_private.gateway_permit(text,jsonb,text,text,text)
+drop cascades to function mc_owner_private.gateway_close(text)
+drop cascades to function mc_owner_private.provision_owner(uuid,text,text)
+drop cascades to function mc_owner_private.disable_owner(uuid,text,text)
+drop cascades to function mc_owner_private.recover_owner(uuid,uuid,text,text)
+DROP SCHEMA
+DROP ROLE
+DROP ROLE
+DROP ROLE

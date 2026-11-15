@@ -1,0 +1,554 @@
+Real isolated PostgreSQL; synthetic gateway/PostgREST principals and claims. No Auth service, provider network or real identities.
+Container mc-p3-owner database owner_b0c89d08a0
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+Migration SHA256 061912ea4bf58c2ba4903d71472ae6ea02d204a60f8759a40a1547599d6da37d
+Applied as non-superuser mc_migrator, no managed Auth schema.
+test_01_zero_owner_denies_and_no_managed_dependencies (__main__.Tests.test_01_zero_owner_denies_and_no_managed_dependencies) ... ok
+test_02_singleton_and_provision_audit_atomicity (__main__.Tests.test_02_singleton_and_provision_audit_atomicity) ... ok
+test_03_no_browser_or_gateway_provisioning (__main__.Tests.test_03_no_browser_or_gateway_provisioning) ... ok
+test_04_nonowner_anonymous_and_missing_mfa (__main__.Tests.test_04_nonowner_anonymous_and_missing_mfa) ... FAIL
+test_05_owner_entry_records_and_audit (__main__.Tests.test_05_owner_entry_records_and_audit) ... FAIL
+test_06_direct_rpc_without_bff_permit (__main__.Tests.test_06_direct_rpc_without_bff_permit) ... FAIL
+test_07_permit_bound_to_payload_action_claims_session (__main__.Tests.test_07_permit_bound_to_payload_action_claims_session) ... FAIL
+test_08_idle_expiry_no_revival_or_activity (__main__.Tests.test_08_idle_expiry_no_revival_or_activity) ... FAIL
+test_09_activity_does_not_extend_absolute_lifetime (__main__.Tests.test_09_activity_does_not_extend_absolute_lifetime) ... FAIL
+test_10_absolute_expiry_even_with_new_provider_token (__main__.Tests.test_10_absolute_expiry_even_with_new_provider_token) ... FAIL
+test_11_provider_token_expiry_and_overlong_ttl (__main__.Tests.test_11_provider_token_expiry_and_overlong_ttl) ... FAIL
+test_12_disablement_invalidates_existing_permits (__main__.Tests.test_12_disablement_invalidates_existing_permits) ... FAIL
+test_13_operator_recovery_preserves_history_revokes_old_sessions (__main__.Tests.test_13_operator_recovery_preserves_history_revokes_old_sessions) ... FAIL
+test_14_revocation_and_old_capability_identity_reuse (__main__.Tests.test_14_revocation_and_old_capability_identity_reuse) ... FAIL
+test_15_logout_during_pending_entry (__main__.Tests.test_15_logout_during_pending_entry) ... FAIL
+test_16_sensitive_actions_require_recent_totp (__main__.Tests.test_16_sensitive_actions_require_recent_totp) ... FAIL
+test_17_permit_expires_during_auth_outage_residual (__main__.Tests.test_17_permit_expires_during_auth_outage_residual) ... FAIL
+test_18_concurrent_replay_exactly_one_success (__main__.Tests.test_18_concurrent_replay_exactly_one_success) ... FAIL
+test_19_concurrent_activity_logout_and_disable (__main__.Tests.test_19_concurrent_activity_logout_and_disable) ... FAIL
+test_20_refresh_state_survives_independent_connections (__main__.Tests.test_20_refresh_state_survives_independent_connections) ... FAIL
+test_21_rls_and_grants (__main__.Tests.test_21_rls_and_grants) ... FAIL
+test_22_audit_failure_rolls_back_record_activity_and_permit (__main__.Tests.test_22_audit_failure_rolls_back_record_activity_and_permit) ... FAIL
+test_23_executor_not_owner_or_bypass_and_no_public_execute (__main__.Tests.test_23_executor_not_owner_or_bypass_and_no_public_execute) ... ok
+test_24_repeat_migration_conflict_is_atomic (__main__.Tests.test_24_repeat_migration_conflict_is_atomic) ... FAIL
+test_25_transaction_start_is_not_wall_clock (__main__.Tests.test_25_transaction_start_is_not_wall_clock) ... FAIL
+test_26_cross_session_capabilities_and_long_lived_identity_immutable (__main__.Tests.test_26_cross_session_capabilities_and_long_lived_identity_immutable) ... FAIL
+
+======================================================================
+FAIL: test_04_nonowner_anonymous_and_missing_mfa (__main__.Tests.test_04_nonowner_anonymous_and_missing_mfa)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 55, in test_04_nonowner_anonymous_and_missing_mfa
+    self.begin()
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_05_owner_entry_records_and_audit (__main__.Tests.test_05_owner_entry_records_and_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 58, in test_05_owner_entry_records_and_audit
+    self.active();nonce=self.permit('record.create','demo')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_06_direct_rpc_without_bff_permit (__main__.Tests.test_06_direct_rpc_without_bff_permit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 63, in test_06_direct_rpc_without_bff_permit
+    self.active()
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_07_permit_bound_to_payload_action_claims_session (__main__.Tests.test_07_permit_bound_to_payload_action_claims_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 69, in test_07_permit_bound_to_payload_action_claims_session
+    self.active();n=self.permit('record.create','safe')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_08_idle_expiry_no_revival_or_activity (__main__.Tests.test_08_idle_expiry_no_revival_or_activity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 75, in test_08_idle_expiry_no_revival_or_activity
+    self.active();n=self.permit()
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_09_activity_does_not_extend_absolute_lifetime (__main__.Tests.test_09_activity_does_not_extend_absolute_lifetime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 81, in test_09_activity_does_not_extend_absolute_lifetime
+    self.active();before=sql('select absolute_until from mc_owner_private.sessions')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_10_absolute_expiry_even_with_new_provider_token (__main__.Tests.test_10_absolute_expiry_even_with_new_provider_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 86, in test_10_absolute_expiry_even_with_new_provider_token
+    self.active();n=self.permit()
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_11_provider_token_expiry_and_overlong_ttl (__main__.Tests.test_11_provider_token_expiry_and_overlong_ttl)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 90, in test_11_provider_token_expiry_and_overlong_ttl
+    self.active();n=self.permit()
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_12_disablement_invalidates_existing_permits (__main__.Tests.test_12_disablement_invalidates_existing_permits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 93, in test_12_disablement_invalidates_existing_permits
+    self.active();n=self.permit()
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_13_operator_recovery_preserves_history_revokes_old_sessions (__main__.Tests.test_13_operator_recovery_preserves_history_revokes_old_sessions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 98, in test_13_operator_recovery_preserves_history_revokes_old_sessions
+    self.active();self.action(self.permit('record.create','old owner'),'record.create','old owner')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_14_revocation_and_old_capability_identity_reuse (__main__.Tests.test_14_revocation_and_old_capability_identity_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 107, in test_14_revocation_and_old_capability_identity_reuse
+    self.active();n=self.permit();self.close();self.close()
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_15_logout_during_pending_entry (__main__.Tests.test_15_logout_during_pending_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 112, in test_15_logout_during_pending_entry
+    self.provision();self.begin();n=self.permit('enter');self.close()
+                     ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_16_sensitive_actions_require_recent_totp (__main__.Tests.test_16_sensitive_actions_require_recent_totp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 115, in test_16_sensitive_actions_require_recent_totp
+    self.active();old=self.c|{'amr':[dict(method='password',timestamp=int(time.time())-1000),dict(method='totp',timestamp=int(time.time())-400)]}
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_17_permit_expires_during_auth_outage_residual (__main__.Tests.test_17_permit_expires_during_auth_outage_residual)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 124, in test_17_permit_expires_during_auth_outage_residual
+    self.active();n=self.permit();self.action(n)
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_18_concurrent_replay_exactly_one_success (__main__.Tests.test_18_concurrent_replay_exactly_one_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 131, in test_18_concurrent_replay_exactly_one_success
+    self.active();n=self.permit('record.create','once')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_19_concurrent_activity_logout_and_disable (__main__.Tests.test_19_concurrent_activity_logout_and_disable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 138, in test_19_concurrent_activity_logout_and_disable
+    self.active();n=self.permit('record.create','racing')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_20_refresh_state_survives_independent_connections (__main__.Tests.test_20_refresh_state_survives_independent_connections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 147, in test_20_refresh_state_survives_independent_connections
+    self.active()
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_21_rls_and_grants (__main__.Tests.test_21_rls_and_grants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 155, in test_21_rls_and_grants
+    self.active();self.action(self.permit('record.create','private'),'record.create','private')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_22_audit_failure_rolls_back_record_activity_and_permit (__main__.Tests.test_22_audit_failure_rolls_back_record_activity_and_permit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 162, in test_22_audit_failure_rolls_back_record_activity_and_permit
+    self.active();n=self.permit('record.create','rollback');before=sql('select last_seen from mc_owner_private.sessions')
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_24_repeat_migration_conflict_is_atomic (__main__.Tests.test_24_repeat_migration_conflict_is_atomic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 174, in test_24_repeat_migration_conflict_is_atomic
+    self.active();self.assertIn('foundation conflict',sql(M,ok=False));self.action(self.permit())
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_25_transaction_start_is_not_wall_clock (__main__.Tests.test_25_transaction_start_is_not_wall_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 176, in test_25_transaction_start_is_not_wall_clock
+    self.active();n=self.permit();sql("update mc_owner_private.sessions set last_seen=clock_timestamp()-interval '30 minutes'+interval '1 second'")
+    ^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+======================================================================
+FAIL: test_26_cross_session_capabilities_and_long_lived_identity_immutable (__main__.Tests.test_26_cross_session_capabilities_and_long_lived_identity_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 180, in test_26_cross_session_capabilities_and_long_lived_identity_immutable
+    self.active()
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 35, in active
+    def active(self):self.provision();self.begin();self.action(self.permit('enter'),'enter')
+                                      ^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 28, in begin
+    return call('mc_owner_gateway','select mc_owner_private.gateway_begin('+args+')',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 15, in call
+    return sql('begin;set local role '+role+';'+settings+q+';commit;',ok=ok)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/My-casino-prompt03/tests/owner/sql.py", line 9, in sql
+    if ok and p.returncode:raise AssertionError(p.stderr)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ERROR:  access denied
+CONTEXT:  PL/pgSQL function mc_owner_private.bind_lock(boolean) line 6 at RAISE
+PL/pgSQL function mc_owner_private.gateway_begin(uuid,text,jsonb,text) line 5 at assignment
+
+
+----------------------------------------------------------------------
+Ran 26 tests in 11.825s
+
+FAILED (failures=22)

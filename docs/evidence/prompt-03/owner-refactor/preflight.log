@@ -1,0 +1,15 @@
+Initial working tree clean. Local and remote HEAD matched b2d0bb9c6f5bd242f13bf06d507499f318a201f0 before any edits.
+$ git branch --show-current
+codex/prompt-03-staff-foundation
+EXIT=0
+$ git rev-parse HEAD
+b2d0bb9c6f5bd242f13bf06d507499f318a201f0
+EXIT=0
+$ git rev-parse FETCH_HEAD
+b2d0bb9c6f5bd242f13bf06d507499f318a201f0
+EXIT=0
+$ git merge-base --is-ancestor 879977e43db29eea8de20b5255c0404f09f8eb19 HEAD
+EXIT=0
+No repository AGENTS.md found. FINAL documents, ADR-002, current implementation and evidence reviewed.
+Documentation changelog request: HTTP 403; no retry. Official documentation search accessible. No owner-project query or mutation.
+npm view pg version returned 8.23.1.

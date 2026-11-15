@@ -1,0 +1,12 @@
+BEGIN
+SET
+ visible_binding_rows 
+----------------------
+                    1
+(1 row)
+
+ singleton 
+-----------
+(0 rows)
+
+ROLLBACK

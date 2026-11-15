@@ -3,7 +3,7 @@
 import concurrent.futures, hashlib, json, os, pathlib, subprocess, sys, time, unittest, uuid
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 C=os.environ.get('TEST_PG_CONTAINER','mc-p3-auth-redesign'); DB='redesign_'+uuid.uuid4().hex[:10]
-M=(ROOT/'supabase/migrations/20261113231743_staff_foundation.sql').read_text()
+M=(ROOT/'docs/evidence/prompt-03/owner-refactor/previous/migration.sql.txt').read_text()
 def sql(q,ok=True,db=DB):
  p=subprocess.run(['docker','exec','-i',C,'psql','-XqAt','-U','postgres','-d',db,'-v','ON_ERROR_STOP=1'],input=q,text=True,capture_output=True)
  if ok and p.returncode: raise AssertionError(p.stderr)

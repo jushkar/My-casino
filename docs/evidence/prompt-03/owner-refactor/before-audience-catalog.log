@@ -1,0 +1,103 @@
+$ docker exec -i mc-p3-owner psql -X -U postgres -d owner_e5600ec602 -v ON_ERROR_STOP=1 < tests/owner/catalog.sql
+                                                       version                                                        
+----------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+(1 row)
+
+ managed_auth_absent 
+---------------------
+ t
+(1 row)
+
+      rolname      | rolcanlogin | rolinherit | rolsuper | rolcreaterole | rolcreatedb | rolreplication | rolbypassrls 
+-------------------+-------------+------------+----------+---------------+-------------+----------------+--------------
+ mc_owner_executor | f           | f          | f        | f             | f           | f              | f
+ mc_owner_gateway  | f           | f          | f        | f             | f           | f              | f
+ mc_owner_operator | f           | f          | f        | f             | f           | f              | f
+(3 rows)
+
+   granted_role    |   member    | grantor  | admin_option | inherit_option | set_option 
+-------------------+-------------+----------+--------------+----------------+------------
+ mc_owner_executor | mc_migrator | postgres | t            | f              | f
+ mc_owner_gateway  | mc_migrator | postgres | t            | f              | f
+ mc_owner_operator | mc_migrator | postgres | t            | f              | f
+(3 rows)
+
+     nspname      | relname  |    owner    | relrowsecurity | relforcerowsecurity |                                                relacl                                                
+------------------+----------+-------------+----------------+---------------------+------------------------------------------------------------------------------------------------------
+ mc_owner_private | audit    | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=a/mc_migrator,mc_owner_operator=a/mc_migrator}
+ mc_owner_private | binding  | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=r/mc_migrator,mc_owner_operator=arw/mc_migrator}
+ mc_owner_private | permits  | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator}
+ mc_owner_private | records  | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator}
+ mc_owner_private | sessions | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator,mc_owner_operator=r/mc_migrator}
+(5 rows)
+
+    schemaname    | tablename |       policyname        |        roles        |  cmd   |                                  qual                                  |                                                                                                                                   with_check                                                                                                                                   
+------------------+-----------+-------------------------+---------------------+--------+------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ mc_owner_private | audit     | owner_audit_insert      | {mc_owner_executor} | INSERT |                                                                        | ((actor_kind = 'owner'::text) AND ((owner_id)::text = current_setting('mc_owner.user_id'::text, true)) AND (action = ANY (ARRAY['session.pending'::text, 'session.enter'::text, 'session.stepup'::text, 'session.close'::text, 'record.create'::text])) AND (EXISTS ( SELECT 1+
+                  |           |                         |                     |        |                                                                        |    FROM mc_owner_private.sessions s                                                                                                                                                                                                                                           +
+                  |           |                         |                     |        |                                                                        |   WHERE ((s.id = audit.session_id) AND (s.user_id = audit.owner_id)))) AND (((action = 'record.create'::text) AND (EXISTS ( SELECT 1                                                                                                                                          +
+                  |           |                         |                     |        |                                                                        |    FROM mc_owner_private.records r                                                                                                                                                                                                                                            +
+                  |           |                         |                     |        |                                                                        |   WHERE ((r.id = audit.record_id) AND (r.created_by = audit.owner_id))))) OR ((action <> 'record.create'::text) AND (record_id IS NULL))))
+ mc_owner_private | audit     | owner_audit_operator    | {mc_owner_operator} | INSERT |                                                                        | ((actor_kind = 'operator'::text) AND (operator_identity = (SESSION_USER)::text) AND (action = ANY (ARRAY['owner.provision'::text, 'owner.disable'::text, 'owner.recover'::text])) AND (owner_id = ( SELECT binding.user_id                                                    +
+                  |           |                         |                     |        |                                                                        |    FROM mc_owner_private.binding                                                                                                                                                                                                                                              +
+                  |           |                         |                     |        |                                                                        |   WHERE (binding.singleton = 1))))
+ mc_owner_private | binding   | owner_binding_lock      | {mc_owner_executor} | UPDATE | (singleton = 1)                                                        | (singleton = 1)
+ mc_owner_private | binding   | owner_binding_operator  | {mc_owner_operator} | ALL    | (singleton = 1)                                                        | (singleton = 1)
+ mc_owner_private | binding   | owner_binding_read      | {mc_owner_executor} | SELECT | (singleton = 1)                                                        | 
+ mc_owner_private | permits   | owner_permits_insert    | {mc_owner_executor} | INSERT |                                                                        | ((permit_hash = current_setting('mc_owner.permit_hash'::text, true)) AND (cap_hash = current_setting('mc_owner.cap_hash'::text, true)))
+ mc_owner_private | permits   | owner_permits_read      | {mc_owner_executor} | SELECT | (permit_hash = current_setting('mc_owner.permit_hash'::text, true))    | 
+ mc_owner_private | permits   | owner_permits_update    | {mc_owner_executor} | UPDATE | (permit_hash = current_setting('mc_owner.permit_hash'::text, true))    | (permit_hash = current_setting('mc_owner.permit_hash'::text, true))
+ mc_owner_private | records   | owner_records_insert    | {mc_owner_executor} | INSERT |                                                                        | ((created_by)::text = current_setting('mc_owner.user_id'::text, true))
+ mc_owner_private | records   | owner_records_read      | {mc_owner_executor} | SELECT | ((created_by)::text = current_setting('mc_owner.user_id'::text, true)) | 
+ mc_owner_private | sessions  | owner_sessions_insert   | {mc_owner_executor} | INSERT |                                                                        | ((cap_hash = current_setting('mc_owner.cap_hash'::text, true)) AND ((user_id)::text = current_setting('mc_owner.user_id'::text, true)))
+ mc_owner_private | sessions  | owner_sessions_operator | {mc_owner_operator} | ALL    | (user_id = ( SELECT binding.user_id                                   +| (user_id = ( SELECT binding.user_id                                                                                                                                                                                                                                           +
+                  |           |                         |                     |        |    FROM mc_owner_private.binding                                      +|    FROM mc_owner_private.binding                                                                                                                                                                                                                                              +
+                  |           |                         |                     |        |   WHERE (binding.singleton = 1)))                                      |   WHERE (binding.singleton = 1)))
+ mc_owner_private | sessions  | owner_sessions_read     | {mc_owner_executor} | SELECT | (cap_hash = current_setting('mc_owner.cap_hash'::text, true))          | 
+ mc_owner_private | sessions  | owner_sessions_update   | {mc_owner_executor} | UPDATE | (cap_hash = current_setting('mc_owner.cap_hash'::text, true))          | (cap_hash = current_setting('mc_owner.cap_hash'::text, true))
+(14 rows)
+
+     nspname      |     proname     |                                 arguments                                 |       owner       | prosecdef |      proconfig       |                                    proacl                                    
+------------------+-----------------+---------------------------------------------------------------------------+-------------------+-----------+----------------------+------------------------------------------------------------------------------
+ mc_owner_private | bind_lock       | require_enabled boolean                                                   | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor}
+ mc_owner_private | disable_owner   | p_expected uuid, p_approval text, p_reason text                           | mc_owner_operator | t         | {"search_path=\"\""} | {mc_owner_operator=X/mc_owner_operator}
+ mc_owner_private | gateway_begin   | p_id uuid, p_cap text, p_claims jsonb, p_box text                         | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor}
+ mc_owner_private | gateway_close   | p_cap text                                                                | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor}
+ mc_owner_private | gateway_lock    | p_cap text                                                                | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor}
+ mc_owner_private | gateway_permit  | p_cap text, p_claims jsonb, p_action text, p_body_hash text, p_nonce text | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor}
+ mc_owner_private | gateway_save    | p_cap text, p_claims jsonb, p_box text                                    | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor}
+ mc_owner_private | hash            | v text                                                                    | mc_owner_executor | f         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor}
+ mc_owner_private | provision_owner | p_user uuid, p_approval text, p_reason text                               | mc_owner_operator | t         | {"search_path=\"\""} | {mc_owner_operator=X/mc_owner_operator}
+ mc_owner_private | recover_owner   | p_expected uuid, p_new uuid, p_approval text, p_reason text               | mc_owner_operator | t         | {"search_path=\"\""} | {mc_owner_operator=X/mc_owner_operator}
+ mc_owner_private | session_lock    | cap text, require_live boolean                                            | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor}
+ mc_owner_private | shape           | c jsonb                                                                   | mc_owner_executor | f         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor}
+ public           | owner_action    | p_session uuid, p_permit text, p_action text, p_note text                 | mc_owner_executor | t         | {"search_path=\"\""} | {mc_owner_executor=X/mc_owner_executor,authenticated=X/mc_owner_executor}
+(13 rows)
+
+      grantee      | table_name | column_name  | privilege_type 
+-------------------+------------+--------------+----------------
+ mc_owner_executor | binding    | singleton    | UPDATE
+ mc_owner_executor | permits    | used_at      | UPDATE
+ mc_owner_executor | sessions   | activated_at | UPDATE
+ mc_owner_executor | sessions   | last_seen    | UPDATE
+ mc_owner_executor | sessions   | revoked_at   | UPDATE
+ mc_owner_executor | sessions   | token_box    | UPDATE
+ mc_owner_operator | binding    | changed_at   | UPDATE
+ mc_owner_operator | binding    | enabled      | UPDATE
+ mc_owner_operator | binding    | generation   | UPDATE
+ mc_owner_operator | binding    | singleton    | UPDATE
+ mc_owner_operator | binding    | user_id      | UPDATE
+ mc_owner_operator | sessions   | revoked_at   | UPDATE
+ mc_owner_operator | sessions   | token_box    | UPDATE
+(13 rows)
+
+         conname          |   pg_get_constraintdef   
+--------------------------+--------------------------
+ binding_generation_check | CHECK ((generation > 0))
+ binding_pkey             | PRIMARY KEY (singleton)
+ binding_singleton_check  | CHECK ((singleton = 1))
+ binding_user_id_key      | UNIQUE (user_id)
+(4 rows)
+
+EXIT=0

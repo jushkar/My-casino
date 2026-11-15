@@ -1,0 +1,49 @@
+PASS isolated browser owner entry, HttpOnly/Secure localhost cookie, expiry draft preservation without browser storage, MFA step-up/manual retry, outage and logout. Provider service is FAKE. HTTPS/Safari not tested.
+PASS /owner returns 503 when normal service configuration is disabled.
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+... Skipped lines
+
+  'My Casino\n' +
+    'Lobby\n' +
+    'Originals\n' +
+    'Table & Arcade\n' +
+    'Provably Fair\n' +
+...
+    'Reset 25,000 credits\n' +
++   'Casino Lobby\n' +
+-   'Casino\n' +
+    '·\n' +
+    'Virtual play\n' +
+    'Turbo\n' +
+    'Demo info\n' +
+    'A♥\n' +
+
+    at file:///workspace/My-casino-prompt03/tests/owner/browser.mjs:53:191 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'My Casino\n' +
+    'Lobby\n' +
+    'Originals\n' +
+    'Table & Arcade\n' +
+    'Provably Fair\n' +
+    '25,000.00\n' +
+    'Wallet\n' +
+    'VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS. Credits are nontransferable and nonredeemable.\n' +
+    'Casino Lobby\n' +
+    'FEATURED ORIGINALS\n' +
+    '...',
+  expected: 'My Casino\n' +
+    'Lobby\n' +
+    'Originals\n' +
+    'Table & Arcade\n' +
+    'Provably Fair\n' +
+    '25,000.00\n' +
+    'Wallet\n' +
+    'VIRTUAL CREDITS ONLY — NO MONETARY VALUE — NO DEPOSITS OR WITHDRAWALS. Credits are nontransferable and nonredeemable.\n' +
+    'Casino Lobby\n' +
+    'FEATURED ORIGINALS\n' +
+    '...',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

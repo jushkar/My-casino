@@ -1,3 +1,13 @@
+# Current status: owner-only refactor — PARTIAL/BLOCKED
+
+The current design is [ADR-003](../../decisions/ADR-003-single-owner-boundary.md), with [owner-refactor evidence and security matrix](owner-refactor/README.md) and an [unapplied provider change plan](provider-change-plan.md). Exactly one operator-bound owner replaces multi-staff administration. `/owner` is separate; the owner explicitly confirmed preserving the accepted `/#/admin` lobby fallback and legacy source.
+
+The proposal combines a narrow PostgreSQL gateway, one-use request-bound BFF permits and independently authorized owner-JWT RPCs. Application sessions use 30-minute inactivity/eight-hour immutable lifetime, encrypted provider tokens, serialized refresh, password/TOTP entry and fresh TOTP for sensitive note writes. Managed Auth tables remain untouched. Normal owner startup stays disabled and production refuses startup.
+
+Real isolated PostgreSQL 17.12 passed 28 SQL cases plus recovery/reapply/catalog and pg/TLS/grant checks. Seventeen isolated SDK/HTTP tests, clean install, frontend typecheck/build, backend syntax, startup, selected secret scan and nine-game browser checks passed. Auth/PostgREST claims and the owner UI service are simulated; these are not live Supabase results. Real identity/MFA, external revocation/refresh, hosted RLS/persistence and end-to-end authorization remain BLOCKED. Conditional bounded revocation and pre-issued permit residual require explicit owner acceptance after live measurement. No provider modification, deployment or Prompt 4 occurred. Earlier evidence/designs below are historical and preserved unchanged.
+
+---
+
 # Current status: Auth redesign — PARTIAL/BLOCKED
 
 The current proposal and evidence are in [auth-redesign/README.md](auth-redesign/README.md) and [ADR-002](../../decisions/ADR-002-staff-session-boundary.md). The unapplied migration now uses only application-owned objects; all managed auth.sessions policies/grants and runtime managed-table access have been removed. Real isolated PostgreSQL 17.12 tests passed (24 cases plus recovery/reapply), as did 13 isolated SDK/HTTP tests, clean install, frontend typecheck/build, backend syntax, selected scans and nine-game gameplay smoke checks. These are not live Supabase results.

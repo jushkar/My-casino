@@ -1,0 +1,4 @@
+$ python3 tests/owner/startup.py
+PASS NODE_ENV=production refuses startup, nonzero exit.
+PASS development entrypoint remains 503 even with syntactically complete synthetic configuration.
+EXIT=0

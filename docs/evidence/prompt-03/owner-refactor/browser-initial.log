@@ -1,0 +1,14 @@
+$ node tests/owner/browser.mjs
+PASS isolated browser owner entry, HttpOnly/Secure localhost cookie, expiry draft preservation without browser storage, MFA step-up/manual retry, outage and logout. Provider service is FAKE. HTTPS/Safari not tested.
+PASS /owner returns 503 when normal service configuration is disabled.
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('House Controls & Math Engine Telemetry').first() to be visible[22m
+
+    at /workspace/My-casino-prompt03/tests/owner/browser.mjs:51:136 {
+  log: [
+    "  - waiting for getByText('House Controls & Math Engine Telemetry').first() to be visible"
+  ],
+  name: 'TimeoutError'
+}
+EXIT=1

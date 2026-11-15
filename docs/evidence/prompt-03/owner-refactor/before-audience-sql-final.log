@@ -1,0 +1,39 @@
+Real isolated PostgreSQL; synthetic gateway/PostgREST principals and claims. No Auth service, provider network or real identities.
+Container mc-p3-owner database owner_e5600ec602
+PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+Migration SHA256 25ce55e451241c3197819ec0acb976372e696e2a247992b7030aa5c77a2c33ae
+Applied as non-superuser mc_migrator, no managed Auth schema.
+test_01_zero_owner_denies_and_no_managed_dependencies (__main__.Tests.test_01_zero_owner_denies_and_no_managed_dependencies) ... ok
+test_02_singleton_and_provision_audit_atomicity (__main__.Tests.test_02_singleton_and_provision_audit_atomicity) ... ok
+test_03_no_browser_or_gateway_provisioning (__main__.Tests.test_03_no_browser_or_gateway_provisioning) ... ok
+test_04_nonowner_anonymous_and_missing_mfa (__main__.Tests.test_04_nonowner_anonymous_and_missing_mfa) ... ok
+test_05_owner_entry_records_and_audit (__main__.Tests.test_05_owner_entry_records_and_audit) ... ok
+test_06_direct_rpc_without_bff_permit (__main__.Tests.test_06_direct_rpc_without_bff_permit) ... ok
+test_07_permit_bound_to_payload_action_claims_session (__main__.Tests.test_07_permit_bound_to_payload_action_claims_session) ... ok
+test_08_idle_expiry_no_revival_or_activity (__main__.Tests.test_08_idle_expiry_no_revival_or_activity) ... ok
+test_09_activity_does_not_extend_absolute_lifetime (__main__.Tests.test_09_activity_does_not_extend_absolute_lifetime) ... ok
+test_10_absolute_expiry_even_with_new_provider_token (__main__.Tests.test_10_absolute_expiry_even_with_new_provider_token) ... ok
+test_11_provider_token_expiry_and_overlong_ttl (__main__.Tests.test_11_provider_token_expiry_and_overlong_ttl) ... ok
+test_12_disablement_invalidates_existing_permits (__main__.Tests.test_12_disablement_invalidates_existing_permits) ... ok
+test_13_operator_recovery_preserves_history_revokes_old_sessions (__main__.Tests.test_13_operator_recovery_preserves_history_revokes_old_sessions) ... ok
+test_14_revocation_and_old_capability_identity_reuse (__main__.Tests.test_14_revocation_and_old_capability_identity_reuse) ... ok
+test_15_logout_during_pending_entry (__main__.Tests.test_15_logout_during_pending_entry) ... ok
+test_16_sensitive_actions_require_recent_totp (__main__.Tests.test_16_sensitive_actions_require_recent_totp) ... ok
+test_17_permit_expires_during_auth_outage_residual (__main__.Tests.test_17_permit_expires_during_auth_outage_residual) ... ok
+test_18_concurrent_replay_exactly_one_success (__main__.Tests.test_18_concurrent_replay_exactly_one_success) ... ok
+test_19_concurrent_activity_logout_and_disable (__main__.Tests.test_19_concurrent_activity_logout_and_disable) ... ok
+test_20_refresh_state_survives_independent_connections (__main__.Tests.test_20_refresh_state_survives_independent_connections) ... ok
+test_21_rls_and_grants (__main__.Tests.test_21_rls_and_grants) ... ok
+test_22_audit_failure_rolls_back_record_activity_and_permit (__main__.Tests.test_22_audit_failure_rolls_back_record_activity_and_permit) ... ok
+test_23_executor_not_owner_or_bypass_and_no_public_execute (__main__.Tests.test_23_executor_not_owner_or_bypass_and_no_public_execute) ... ok
+test_24_repeat_migration_conflict_is_atomic (__main__.Tests.test_24_repeat_migration_conflict_is_atomic) ... ok
+test_25_transaction_start_is_not_wall_clock (__main__.Tests.test_25_transaction_start_is_not_wall_clock) ... ok
+test_26_cross_session_capabilities_and_long_lived_identity_immutable (__main__.Tests.test_26_cross_session_capabilities_and_long_lived_identity_immutable) ... ok
+test_27_recovery_rollback_and_forged_audit_actor (__main__.Tests.test_27_recovery_rollback_and_forged_audit_actor) ... ok
+test_28_owner_binding_fields_cannot_be_changed_by_executor (__main__.Tests.test_28_owner_binding_fields_cannot_be_changed_by_executor) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 47.056s
+
+OK
+Disposable cleanup / clean reapply: PASS
