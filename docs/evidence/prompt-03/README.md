@@ -1,3 +1,11 @@
+# Current status: live preflight — PARTIAL/BLOCKED
+
+[Live-preflight evidence](live-preflight/README.md) independently confirms the expected project through read-only connector metadata, but the execution environment still receives proxy CONNECT 403 and a separate DNS failure. Hosted SQL/Auth work stopped as instructed. Hosted privileges, migrations, configuration and real integration remain NOT VERIFIED/BLOCKED. No provider changes or owner activation occurred.
+
+Local checks passed: clean install, frontend typecheck/build, 17 simulated-provider SDK/HTTP tests, 29 real isolated PostgreSQL security cases plus recovery/catalog checks, backend syntax/startup and selected scans. An added test and ADR-003 amendment clarify that the gateway trusts BFF claim input for pending state; independent owner-JWT authorization is still required. No application/migration/dependency changes; prior nine-game and all earlier evidence are preserved. The next step is resolving the active runtime egress gate and completing read-only preflight before seeking specific provider-write approvals.
+
+---
+
 # Current status: owner-only refactor — PARTIAL/BLOCKED
 
 The current design is [ADR-003](../../decisions/ADR-003-single-owner-boundary.md), with [owner-refactor evidence and security matrix](owner-refactor/README.md) and an [unapplied provider change plan](provider-change-plan.md). Exactly one operator-bound owner replaces multi-staff administration. `/owner` is separate; the owner explicitly confirmed preserving the accepted `/#/admin` lobby fallback and legacy source.

@@ -1,0 +1,7 @@
+$ npm run typecheck
+
+> maharaja-club-casino@2.0.0 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0

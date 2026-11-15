@@ -1,0 +1,13 @@
+{
+  "time_utc": "2026-11-15T20:05:00.816534+00:00",
+  "target": "https://ymgbvbocajthwhrljadn.supabase.co/auth/v1/health",
+  "credential_mode": "deliberately unauthenticated; no API key, cookie or Authorization header",
+  "proxy_configured": true,
+  "dns": {
+    "status": "FAIL",
+    "error": "[Errno -3] Temporary failure in name resolution"
+  },
+  "curl_exit": 56,
+  "curl_metrics": "{\"proxy_connect\":403,\"http_status\":000,\"tls_verify_result\":0,\"num_connects\":1}",
+  "network_error": "curl: (56) CONNECT tunnel failed, response 403"
+}

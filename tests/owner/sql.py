@@ -193,6 +193,18 @@ class Tests(unittest.TestCase):
   self.provision()
   for col in ['user_id','enabled','generation']:
    self.assertIn('permission denied',call('mc_owner_executor','update mc_owner_private.binding set '+col+'='+col,ok=False))
+ def test_29_gateway_attests_claims_but_cannot_mint_provider_identity(self):
+  # Deliberately unverified JSON: gateway is a trusted BFF attestor, not an Auth
+  # verifier. It CAN create pending state/permits for the already-bound owner.
+  # This power cannot substitute for PostgREST's independent signed user JWT.
+  self.provision();self.begin();n=self.permit('enter')
+  self.assertEqual(sql("select count(*) from mc_owner_private.audit where action='session.pending'"),'1')
+  self.assertIn('permission denied',self.action(n,'enter',role='mc_owner_gateway',ok=False))
+  self.assertIn('access denied',self.action(n,'enter',c=self.c|{'sub':self.other},ok=False))
+  self.assertIn('permission denied',self.operator_attempt_as_gateway())
+  self.assertEqual(sql('select count(*) from mc_owner_private.sessions where activated_at is not null'),'0')
+ def operator_attempt_as_gateway(self):
+  return call('mc_owner_gateway',"select mc_owner_private.recover_owner('"+self.u+"','"+self.other+"','forged approval','isolated adversarial test')",ok=False)
 if __name__=='__main__':
  print('Real isolated PostgreSQL; synthetic gateway/PostgREST principals and claims. No Auth service, provider network or real identities.',flush=True)
  print('Container',C,'database',DB,flush=True);print(sql('select version()',db='postgres'),flush=True)

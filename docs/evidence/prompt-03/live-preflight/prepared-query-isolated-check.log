@@ -1,0 +1,106 @@
+REAL ISOLATED PostgreSQL only; NOT HOSTED.
+$ docker exec -i mc-p3-live-preflight psql -X -U postgres -d owner_c7ac01bd4f -v ON_ERROR_STOP=1 < tests/owner/hosted-preflight.sql
+BEGIN
+                                                       version                                                        | server_version_num | current_user | session_user | current_database | ssl_enabled 
+----------------------------------------------------------------------------------------------------------------------+--------------------+--------------+--------------+------------------+-------------
+ PostgreSQL 17.12 (Debian 17.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit | 170012             | postgres     | postgres     | owner_c7ac01bd4f | off
+(1 row)
+
+      rolname      | rolsuper | rolinherit | rolcreaterole | rolcreatedb | rolcanlogin | rolreplication | rolbypassrls 
+-------------------+----------+------------+---------------+-------------+-------------+----------------+--------------
+ anon              | f        | t          | f             | f           | f           | f              | f
+ authenticated     | f        | t          | f             | f           | f           | f              | f
+ mc_owner_executor | f        | f          | f             | f           | f           | f              | f
+ mc_owner_gateway  | f        | f          | f             | f           | f           | f              | f
+ mc_owner_operator | f        | f          | f             | f           | f           | f              | f
+ postgres          | t        | t          | t             | t           | t           | t              | t
+ service_role      | f        | t          | f             | f           | f           | f              | t
+(7 rows)
+
+   granted_role    |   member    | admin_option | inherit_option | set_option 
+-------------------+-------------+--------------+----------------+------------
+ mc_owner_executor | mc_migrator | t            | f              | f
+ mc_owner_gateway  | mc_migrator | t            | f              | f
+ mc_owner_operator | mc_migrator | t            | f              | f
+(3 rows)
+
+     nspname      |       owner       |                                                           nspacl                                                            | inspector_can_create 
+------------------+-------------------+-----------------------------------------------------------------------------------------------------------------------------+----------------------
+ mc_owner_private | mc_migrator       | {mc_migrator=UC/mc_migrator,mc_owner_executor=U/mc_migrator,mc_owner_gateway=U/mc_migrator,mc_owner_operator=U/mc_migrator} | t
+ public           | pg_database_owner | {pg_database_owner=UC/pg_database_owner,=U/pg_database_owner,mc_migrator=U*C*/pg_database_owner}                            | t
+(2 rows)
+
+ inspector_database_create | inspector_createrole 
+---------------------------+----------------------
+ t                         | t
+(1 row)
+
+     nspname      | relname  | relkind |    owner    | relrowsecurity | relforcerowsecurity |                                                relacl                                                
+------------------+----------+---------+-------------+----------------+---------------------+------------------------------------------------------------------------------------------------------
+ mc_owner_private | audit    | r       | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=a/mc_migrator,mc_owner_operator=a/mc_migrator}
+ mc_owner_private | binding  | r       | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=r/mc_migrator,mc_owner_operator=arw/mc_migrator}
+ mc_owner_private | permits  | r       | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator}
+ mc_owner_private | records  | r       | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator}
+ mc_owner_private | sessions | r       | mc_migrator | t              | t                   | {mc_migrator=arwdDxtm/mc_migrator,mc_owner_executor=ar/mc_migrator,mc_owner_operator=r/mc_migrator}
+(5 rows)
+
+     nspname      |     proname     |                                 arguments                                 |       owner       | prosecdef |                                    proacl                                    | function_search_path 
+------------------+-----------------+---------------------------------------------------------------------------+-------------------+-----------+------------------------------------------------------------------------------+----------------------
+ mc_owner_private | bind_lock       | require_enabled boolean                                                   | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor}                                      | search_path=""
+ mc_owner_private | disable_owner   | p_expected uuid, p_approval text, p_reason text                           | mc_owner_operator | t         | {mc_owner_operator=X/mc_owner_operator}                                      | search_path=""
+ mc_owner_private | gateway_begin   | p_id uuid, p_cap text, p_claims jsonb, p_box text                         | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor} | search_path=""
+ mc_owner_private | gateway_close   | p_cap text                                                                | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor} | search_path=""
+ mc_owner_private | gateway_lock    | p_cap text                                                                | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor} | search_path=""
+ mc_owner_private | gateway_permit  | p_cap text, p_claims jsonb, p_action text, p_body_hash text, p_nonce text | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor} | search_path=""
+ mc_owner_private | gateway_save    | p_cap text, p_claims jsonb, p_box text                                    | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,mc_owner_gateway=X/mc_owner_executor} | search_path=""
+ mc_owner_private | hash            | v text                                                                    | mc_owner_executor | f         | {mc_owner_executor=X/mc_owner_executor}                                      | search_path=""
+ mc_owner_private | provision_owner | p_user uuid, p_approval text, p_reason text                               | mc_owner_operator | t         | {mc_owner_operator=X/mc_owner_operator}                                      | search_path=""
+ mc_owner_private | recover_owner   | p_expected uuid, p_new uuid, p_approval text, p_reason text               | mc_owner_operator | t         | {mc_owner_operator=X/mc_owner_operator}                                      | search_path=""
+ mc_owner_private | session_lock    | cap text, require_live boolean                                            | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor}                                      | search_path=""
+ mc_owner_private | shape           | c jsonb                                                                   | mc_owner_executor | f         | {mc_owner_executor=X/mc_owner_executor}                                      | search_path=""
+ public           | owner_action    | p_session uuid, p_permit text, p_action text, p_note text                 | mc_owner_executor | t         | {mc_owner_executor=X/mc_owner_executor,authenticated=X/mc_owner_executor}    | search_path=""
+(13 rows)
+
+ grantor | schema_name | defaclobjtype | grantee | privilege_type | is_grantable 
+---------+-------------+---------------+---------+----------------+--------------
+(0 rows)
+
+     nspname      | relname  |         polname         | polcmd | polpermissive |        roles        | has_using | has_check 
+------------------+----------+-------------------------+--------+---------------+---------------------+-----------+-----------
+ mc_owner_private | audit    | owner_audit_insert      | a      | t             | {mc_owner_executor} | f         | t
+ mc_owner_private | audit    | owner_audit_operator    | a      | t             | {mc_owner_operator} | f         | t
+ mc_owner_private | binding  | owner_binding_lock      | w      | t             | {mc_owner_executor} | t         | t
+ mc_owner_private | binding  | owner_binding_operator  | *      | t             | {mc_owner_operator} | t         | t
+ mc_owner_private | binding  | owner_binding_read      | r      | t             | {mc_owner_executor} | t         | f
+ mc_owner_private | permits  | owner_permits_insert    | a      | t             | {mc_owner_executor} | f         | t
+ mc_owner_private | permits  | owner_permits_read      | r      | t             | {mc_owner_executor} | t         | f
+ mc_owner_private | permits  | owner_permits_update    | w      | t             | {mc_owner_executor} | t         | t
+ mc_owner_private | records  | owner_records_insert    | a      | t             | {mc_owner_executor} | f         | t
+ mc_owner_private | records  | owner_records_read      | r      | t             | {mc_owner_executor} | t         | f
+ mc_owner_private | sessions | owner_sessions_insert   | a      | t             | {mc_owner_executor} | f         | t
+ mc_owner_private | sessions | owner_sessions_operator | *      | t             | {mc_owner_operator} | t         | t
+ mc_owner_private | sessions | owner_sessions_read     | r      | t             | {mc_owner_executor} | t         | f
+ mc_owner_private | sessions | owner_sessions_update   | w      | t             | {mc_owner_executor} | t         | t
+(14 rows)
+
+ inspector_pgrst_db_schemas 
+----------------------------
+ 
+(1 row)
+
+ role_name | database_name | nonsecret_setting 
+-----------+---------------+-------------------
+(0 rows)
+
+ evtname | evtevent | evtenabled | owner | handler 
+---------+----------+------------+-------+---------
+(0 rows)
+
+ migration_history_exists 
+--------------------------
+ f
+(1 row)
+
+COMMIT
+
+EXIT_CODE=0

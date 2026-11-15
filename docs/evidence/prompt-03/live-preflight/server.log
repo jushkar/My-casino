@@ -1,0 +1,32 @@
+$ npm run test:server
+
+> maharaja-club-casino@2.0.0 test:server
+> node --test server/*.test.js
+
+✔ isolated owner routes enforce anonymous 401, nonowner/AAL1/disabled 403 and owner access (125.672549ms)
+✔ isolated exact Origin, CSRF binding, content type and CORS denial (35.844919ms)
+✔ isolated writes retain identity/MFA checks with valid CSRF; malformed notes never reach service (8.354048ms)
+✔ isolated logout revokes old app cookie and distinguishes provider uncertainty (8.088987ms)
+✔ isolated Auth/DB outage and disabled startup return safe 503 (8.603636ms)
+✔ isolated rate limiting, no owner enrollment/reassignment routes (7.794892ms)
+✔ installed SDK verifies signature, subject, issuer and bounded provider TTL (48.748886ms)
+✔ token encryption authenticates session identity and rejects tampering (2.270274ms)
+✔ owner login stores only opaque cookie, encrypted tokens, then SDK MFA opens entry (13.894531ms)
+✔ non-owner login and missing opaque cookie cannot mint permits (3.118426ms)
+✔ online Auth and database outages issue no new BFF permits (6.320705ms)
+✔ SDK refresh is serialized across concurrent requests and durable logout (5.941094ms)
+✔ external logout is not inferred from getUser; expired revoked refresh denies renewal (3.535221ms)
+✔ application close commits before uncertain provider logout; DB failure does not claim success (4.698359ms)
+✔ real service maps fake Auth/DB failures to generic HTTP responses without material leakage (91.565201ms)
+✔ gateway configuration rejects broad roles and URI overrides before connecting (0.766632ms)
+✔ observed Auth rejection durably retires the app session; later provider recovery cannot reopen it (9.321016ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 941.639889
+
+EXIT_CODE=0

@@ -1,0 +1,7 @@
+Starting working tree clean. No AGENTS.md found.
+Fetched origin refs/heads/codex/prompt-03-staff-foundation into its remote tracking ref.
+Local and remote HEAD: c68fd73134dda5a58255969729b83612ccb71dd1
+Branch: codex/prompt-03-staff-foundation
+git merge-base --is-ancestor 879977e43db29eea8de20b5255c0404f09f8eb19 HEAD: EXIT=0
+Read current FINAL blueprint/runbook/gates, EXECUTION_STATE, ADR-003, owner-refactor evidence, provider plan and unapplied SQL.
+No provider-dependent work after failed execution-environment connectivity. Only get_project metadata was requested alongside the bounded diagnostic.

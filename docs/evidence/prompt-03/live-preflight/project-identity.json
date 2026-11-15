@@ -1,0 +1,16 @@
+{
+  "source": "authenticated Supabase get_project connector; metadata only",
+  "recorded_utc": "2026-11-15T20:06:58.917682+00:00",
+  "id": "ymgbvbocajthwhrljadn",
+  "ref": "ymgbvbocajthwhrljadn",
+  "name": "my-casino-dev",
+  "region": "us-east-1",
+  "status": "ACTIVE_HEALTHY",
+  "database_metadata": {
+    "version": "17.11.0.019",
+    "postgres_engine": "17",
+    "release_channel": "ga"
+  },
+  "runtime_authentication": "NOT RUN; proxy CONNECT 403",
+  "sql_server_version": "NOT VERIFIED; no hosted SQL executed"
+}

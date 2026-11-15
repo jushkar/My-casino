@@ -4,7 +4,15 @@
 
 [ADR-003](../../decisions/ADR-003-single-owner-boundary.md) is the current proposal. The owner approved one application owner, `/owner`, 30-minute inactivity/eight-hour maximum, and preservation of accepted routing. The baseline `/#/admin` falls back to the lobby; legacy House Controls source remains unchanged/unrouted. Prior plans/designs are preserved in `owner-refactor/previous/`, ADR-002 and earlier evidence.
 
-No owner-project connection or modification occurred. The exact SQL is [20261113231743_staff_foundation.sql](../../../supabase/migrations/20261113231743_staff_foundation.sql). Its filename is historical; its content is the **unapplied owner-only draft**. If any environment has applied an earlier version, stop and create a reviewed forward migration instead. Never replay this replacement over existing staff objects.
+The original owner refactor made no owner-project connection or modification. The subsequent live-preflight continuation read project metadata only, then stopped hosted work after the runtime network failure; no modification occurred. The exact SQL is [20261113231743_staff_foundation.sql](../../../supabase/migrations/20261113231743_staff_foundation.sql). Its filename is historical; its content is the **unapplied owner-only draft**. If any environment has applied an earlier version, stop and create a reviewed forward migration instead. Never replay this replacement over existing staff objects.
+
+## Latest preflight — 2026-11-15, blocked before hosted SQL
+
+[Live preflight](live-preflight/README.md) verified the branch baseline and project identity through connector metadata, but the execution environment still received proxy CONNECT 403 and a separate DNS failure. Further hosted checks stopped as instructed. Database metadata reports 17.11.0.019/engine 17; actual SQL version, privileges, object/migration collisions, exposed schemas, Auth/JWT/MFA settings and gateway TLS/login remain **NOT VERIFIED**. Do not treat historical empty-project reports as a fresh preflight.
+
+The exact draft below is unchanged. No migration, role, grant, Auth setting or identity was changed. A prepared metadata-only query is in `tests/owner/hosted-preflight.sql`; it was checked on isolated PostgreSQL only. Reconfirm the project and migration history before any later application. The first next action is fixing effective runtime egress/DNS and rerunning the already-authorized read-only preflight, not requesting provider writes to work around it.
+
+Gateway qualification: its functions trust BFF-supplied claims when creating pending state/permits. It cannot mint a provider-signed identity or perform owner data actions alone, but a gateway credential plus a matching valid owner JWT can bypass online BFF checks; gateway compromise can forge pending audit/deny service. Owner/security review must explicitly accept or redesign that trust boundary, the public definer RPC, and the conditional revocation/in-flight residual before any activation. See ADR-003's amendment and the new SQL adversarial test.
 
 ## Exact affected objects
 
