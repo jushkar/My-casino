@@ -1,0 +1,31 @@
+{
+  "utc": "2026-11-18T23:46:42.951398+00:00",
+  "context": "active Codex task shell",
+  "url": "https://ymgbvbocajthwhrljadn.supabase.co/auth/v1/health",
+  "method": "GET",
+  "https_attempts": 1,
+  "https_proxy_configured": true,
+  "local_dns": "FAIL",
+  "dns_error": "Temporary failure in name resolution",
+  "dns_errno": -3,
+  "curl_exit": 56,
+  "proxy_connect": "403",
+  "curl_http_code": "000",
+  "target_http_status": null,
+  "tls_handshake_completed": false,
+  "tls_verification": null,
+  "error": "curl: (56) CONNECT tunnel failed, response 403",
+  "runtime_policy": {
+    "source": "cloud_environment.environment_status",
+    "matches_selected_instance": true,
+    "observations_current": true,
+    "spec_revision": "1",
+    "observed_spec_revision": "1",
+    "phase": "running",
+    "mode": "restricted",
+    "state": "enforced",
+    "custom_allowed_host_count": 0,
+    "effective_allowed_host_count": 144,
+    "target_match": false
+  }
+}

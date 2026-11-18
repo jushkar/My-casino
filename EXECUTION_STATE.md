@@ -1,3 +1,21 @@
+# Prompt 3 runtime check | PARTIAL/BLOCKED
+
+2026-11-18 23:46:42 UTC. The active task reported a current, enforced restricted policy, revision 1 both desired and observed. Its 144 effective entries contained no match for ymgbvbocajthwhrljadn.supabase.co, and its custom host list was empty. The separate environment setup settings and any additional organization policy were unverified.
+
+| Check | Result |
+|---|---|
+| Git baseline and ancestry | PASS. Clean feature worktree and fetched remote matched 05b1f59387aa23391845ea8a312872d27d1ca275. Accepted Prompt 2 commit 879977e43db29eea8de20b5255c0404f09f8eb19 is an ancestor. |
+| Local DNS | FAIL. Temporary failure in name resolution. The proxy may resolve the destination independently. |
+| Runtime GET to Auth health | FAIL. One unauthenticated request via inherited proxy. CONNECT 403, curl exit 56. |
+| Target TLS and HTTP | NOT RUN. Proxy refused tunnel before TLS. Curl reported 000 and received no origin status. |
+| Hosted catalog, Auth, gateway, RLS and persistence | NOT RUN. Hosted checks stopped at the connectivity gate. November 15 connector identity evidence comes from a separate connection. |
+
+On iPad Safari, open the My-casino environment settings in Codex and check the agent/runtime domain allowlist. Add just the project hostname if missing. If setup already includes it, use that saved/published version for a new task on the pushed branch, or apply it to this instance if that option is available. Verify the effective policy in the resulting task.
+
+Only evidence and state changed. The single-manager owner panel stays private. [Sanitized runtime evidence](docs/evidence/prompt-03/live-preflight/runtime-2026-11-18.json).
+
+---
+
 # Prompt 3 live connectivity/security preflight — PARTIAL / BLOCKED
 
 - Verified clean baseline and fetched remote `c68fd73134dda5a58255969729b83612ccb71dd1` on `codex/prompt-03-staff-foundation`; accepted Prompt 2 ancestry remains. Current [evidence and exact changed paths](docs/evidence/prompt-03/live-preflight/README.md) preserve all previous work/history.
