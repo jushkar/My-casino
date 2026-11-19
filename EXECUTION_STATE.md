@@ -1,3 +1,11 @@
+# Prompt 3 read-only preflight | PARTIAL, 2026-11-19 UTC
+
+The unrestricted runtime reached the project Auth health endpoint with one credential-free GET. Proxy CONNECT 200, default TLS verification passed, origin 401. Separately, the Supabase connector confirmed the development project, PostgreSQL 17.11, empty migration history and hosted catalog/default grants. Earlier connectivity failures are preserved below.
+
+The exposed schema list, exclusion of mc_owner_private, JWT lifetime and TOTP enrollment/verification await Dashboard readback. Dedicated gateway TLS/login, real owner and non-owner access, hosted RLS enforcement and persistence are **NOT RUN**. The owner panel remains disabled. [Sanitized observations, iPad fields and outstanding approvals](docs/evidence/prompt-03/live-preflight/runtime-and-catalog-2026-11-19.md).
+
+---
+
 # Prompt 3 runtime check | PARTIAL/BLOCKED
 
 2026-11-18 23:46:42 UTC. The active task reported a current, enforced restricted policy, revision 1 both desired and observed. Its 144 effective entries contained no match for ymgbvbocajthwhrljadn.supabase.co, and its custom host list was empty. The separate environment setup settings and any additional organization policy were unverified.
